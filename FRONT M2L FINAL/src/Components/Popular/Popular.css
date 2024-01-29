@@ -1,0 +1,36 @@
+.popular {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    align-items: center;
+    gap: 30px;
+    height: 100vh;
+    max-width: 200;
+    
+  }
+
+  .product-item {
+    width: 400px; 
+    height: auto; 
+    
+  }
+  
+  .adjustedimg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .popular h1 {
+    color: #171717;
+    font-size: 50px;
+    font-weight: 600;
+  }
+  
+  .popular hr {
+    width: 200px;
+    height: 6px;
+    border-radius: 10px;
+    background: #252525;
+  }
