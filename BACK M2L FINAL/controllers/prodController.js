@@ -107,3 +107,32 @@ exports.deleteProd = async (req, res) => {
         if (conn) conn.release();
     }
 };
+exports.decrementProd = async (req, res) => {
+    const puid = req.params.puid;
+    let conn;
+    try {
+      conn = await pool.getConnection();
+  
+    
+      const currentProduct = await conn.query('SELECT quantite FROM produit WHERE puid=?', [puid]);
+      const currentQuantite = currentProduct[0].quantite;
+  
+    
+      if (currentQuantite > 0) {
+       
+        const newQuantite = currentQuantite - 1;
+        
+     
+        await conn.query('UPDATE produit SET quantite=? WHERE puid=?', [newQuantite, puid]);
+  
+        res.status(200).json({ message: 'Quantité décrémentée avec succès' });
+      } else {
+        res.status(400).json({ message: 'La quantité du produit est déjà à zéro' });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Erreur lors de la décrémentation de la quantité du produit' });
+    } finally {
+      if (conn) conn.release();
+    }
+  };

@@ -20,22 +20,6 @@ app.use('/uploads', express.static('uploads'))
 app.use('/api/user' , userRoute);
 app.use('/api/prod', prodRoute);
 
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
 app.listen(4000, () => {
     console.log("server runs ")
 })

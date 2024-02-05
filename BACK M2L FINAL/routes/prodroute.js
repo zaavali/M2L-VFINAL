@@ -9,5 +9,6 @@ router.get('/produit', prodController.getAllProduits);
 router.post('/produit', upload.single('image'), prodController.postProd);
 router.put('/produit/:puid', prodController.putProdbypuid);
 router.delete('/produit/:puid',prodController.deleteProd)
+router.put('/produit/:puid/decrement', prodController.decrementProd);
 
 module.exports = router;

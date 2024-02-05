@@ -2,7 +2,7 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto')
 const express = require ('express')
 const app = express()
-
+const jwt = require('jsonwebtoken');
 
 const {pool} = require('../database/database')
 const users = [];
@@ -24,60 +24,84 @@ const users = [];
    }
 };
 
-exports.postUser =async (req,res) => {
-    let conn;
-     
-    bcrypt.hash(req.body.mdp, 10)
-        .then(async (hash) => {
-            console.log("connexion launch")
+
+    exports.postUser = async (req, res) => {
+        try {
+            let conn;
+    
+            // Vérification si l'utilisateur existe déjà dans la base de données
             conn = await pool.getConnection();
-            console.log('insert request launching')
-            console.log(req.body);
-            let request = 'INSERT INTO user (uuid, nom, email, mdp ) VALUES (?,?,?, ?);'
-            let rows = await conn.query(request, [crypto.randomUUID(), req.body.nom, req.body.email, hash ]);
-            console.log(rows);
-            res.status(200).json(rows.affectedRows)
+            const result = await conn.query('SELECT * FROM user WHERE email = ?', [req.body.email]);
+            conn.release();
+            
+            if (result.length > 0) {
+                return res.status(400).json({ error: 'Cet utilisateur existe déjà.' });
+            }
+    
+            // Hachage du mot de passe avec bcrypt
+            const hashedPassword = await bcrypt.hash(req.body.mdp, 10);
+    
+            // Enregistrement du nouvel utilisateur dans la base de données
+            conn = await pool.getConnection();
+            const uuid = crypto.randomUUID();
+            const insertUserQuery = 'INSERT INTO user (uuid, nom, email, mdp) VALUES (?, ?, ?, ?)';
+            const insertUserValues = [uuid, req.body.nom, req.body.email, hashedPassword];
+            await conn.query(insertUserQuery, insertUserValues);
+            conn.release();
+    
+            // Génération du token JWT
+            const token = jwt.sign({ email: req.body.email }, process.env.API_KEY, { expiresIn: '1h' });
+    
+            // Envoi du token en réponse
+            res.status(200).json({ token });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Erreur lors de l\'inscription' });
         }
-        ).catch((error) => res.status(500).json(error))
-
-};
+    };
 
 
-exports.conn = async (req, res) => {
-    const { email, mdp } = req.body;
-
-    const query = 'SELECT email, mdp, admin FROM user WHERE email = ?';
-
-    try {
-        const conn = await pool.getConnection();
-
-        const rows = await conn.query(query, [email]);
-
-        if (rows && rows.length > 0) {
-            const user = rows[0];
-
-            const isPasswordValid = await bcrypt.compare(mdp, user.mdp);
-
-            if (isPasswordValid) {
-          
-                
-                if (user.admin === 1) {
-                    res.status(200).json({ message: 'Utilisateur connecté en tant qu\'admin', isAdmin: true });
+    exports.conn = async (req, res) => {
+        const { email, mdp } = req.body;
+    
+        const query = 'SELECT email, mdp, admin FROM user WHERE email = ?';
+    
+        try {
+            const conn = await pool.getConnection();
+    
+            const rows = await conn.query(query, [email]);
+    
+            if (rows && rows.length > 0) {
+                const user = rows[0];
+    
+                const isPasswordValid = await bcrypt.compare(mdp, user.mdp);
+    
+                if (isPasswordValid) {
+                    if (user.admin === 1) {
+                        const token = jwt.sign({ email: user.email, isAdmin: true }, process.env.API_KEY, { expiresIn: '1h' });
+                        // Affiche le token et le statut d'admin dans la console
+                        console.log('Token pour l\'administrateur:', token);
+                        console.log('L\'utilisateur est un administrateur');
+                        res.status(200).json({ token, isAdmin: true });
+                    } else {
+                        const token = jwt.sign({ email: user.email, isAdmin: false }, process.env.API_KEY, { expiresIn: '1h' });
+                        // Affiche le token et le statut d'admin dans la console
+                        console.log('Token pour l\'utilisateur:', token);
+                        console.log('L\'utilisateur n\'est pas un administrateur');
+                        res.status(200).json({ token, isAdmin: false });
+                    }
                 } else {
-                    res.status(200).json({ message: 'Utilisateur connecté en tant qu\'utilisateur', isAdmin: false });
+                    res.status(401).json({ message: 'Identifiants invalides' });
                 }
             } else {
                 res.status(401).json({ message: 'Identifiants invalides' });
             }
-        } else {
-            res.status(401).json({ message: 'Identifiants invalides' });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Erreur de serveur' });
         }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Erreur de serveur' });
-    }
-};
-
+    };
+    
 
 exports.updateUser =async (req, res) => {
     const {  nom, email, mdp} = req.body;
