@@ -25,7 +25,7 @@ export default function Connection() {
   const handleLog = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:4000/api/user/connexion/', formdata);
+      const response = await axios.post('http://localhost:4000/api/user/conn/', formdata);
       setIsConnected(true);
       setIsAdmin(response.data.isAdmin);
 
