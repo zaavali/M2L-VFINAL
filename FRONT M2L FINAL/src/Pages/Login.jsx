@@ -1,58 +1,63 @@
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CSS/Login.css';
 import Admin from './admin';
 import { Link } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 export default function Connection() {
   const [formdata, setFormData] = useState({ email: '', mdp: '' });
-  const [isConnected, setIsConnected] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false);
   const [loginMessage, setLoginMessage] = useState('');
+  const [isConnected, setIsConnected] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false); // Ajout de l'état isAdmin
 
   useEffect(() => {
-    const storedLoginStatus = localStorage.getItem('isLoggedIn');
-    if (storedLoginStatus && storedLoginStatus === 'true') {
+    const token = Cookies.get('token');
+    if (token) {
       setIsConnected(true);
-      const isAdminStored = localStorage.getItem('isAdmin');
-      setIsAdmin(isAdminStored === 'true');
+      // Vérifier le statut isAdmin si nécessaire
     }
-  }, [setIsConnected]);
-
-
-
+  }, []);
 
   const handleLog = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:4000/api/user/conn/', formdata);
-      setIsConnected(true);
-      setIsAdmin(response.data.isAdmin);
+      const token = response.data.token;
+      const isAdmin = response.data.isAdmin; // Extraire le statut isAdmin du token
 
-      // Stocker l'information de connexion dans le localStorage
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('isAdmin', response.data.isAdmin ? 'true' : 'false');
+      Cookies.set('token', token, { expires: 2 / 24, secure: true, sameSite: 'strict' });
+
+      setIsConnected(true);
+      setIsAdmin(isAdmin);
+
     } catch (error) {
       console.error(error);
       setLoginMessage('Échec de la connexion. Veuillez vérifier vos informations.');
     }
   };
 
-  const handleLogout = () => {
-    // Déconnecter l'utilisateur et supprimer l'information du localStorage
-    setIsConnected(false);
-    setIsAdmin(false);
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('isAdmin');
+  const handleLogout = async () => {
+    try {
+      await axios.post('http://localhost:4000/api/user/logout');
+      Cookies.remove('token');
+      setIsConnected(false);
+      setIsAdmin(false);
+    } catch (error) {
+      console.error(error);
+    }
   };
-  
+
   return (
     <>
       {isConnected ? (
         <div>
           <h1>Vous êtes connecté</h1>
           {isAdmin ? (
-            <Admin></Admin>
+            <>
+              <p>Connecté en tant qu'admin</p>
+              <Admin />
+            </>
           ) : (
             <p>Connecté en tant qu'utilisateur</p>
           )}
@@ -87,3 +92,4 @@ export default function Connection() {
     </>
   );
 }
+
