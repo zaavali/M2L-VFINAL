@@ -38,6 +38,9 @@ export default function Prodbddshow() {
               <p> prix: {prod.prix}</p>
             </div>
             <div>
+            <p> description: {prod.description}</p>
+            </div>
+            <div>
               <p> quantité: {prod.quantite}</p>
             </div>
             <button onClick={() => addToCart(prod.puid)}>Ajouter au panier</button>

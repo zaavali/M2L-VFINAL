@@ -31,9 +31,9 @@ function App() {
         <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
         <Routes>
           <Route path='/' element={<Shop />} />
-          <Route path='/mens' element={<Prodbddshow />} />
-          <Route path='/womens' element={<Prodbddshow />} />
-          <Route path='/kids' element={<Prodbddshow />} />
+          <Route path='/badminton' element={<Prodbddshow />} />
+          <Route path='/basket' element={<Prodbddshow />} />
+          <Route path='/tennis' element={<Prodbddshow />} />
           <Route path="/product" element={<Product />}>
             <Route path=':productId' element={<Product />} />
           </Route>

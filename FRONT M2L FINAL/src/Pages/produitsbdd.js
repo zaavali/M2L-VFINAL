@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import '../Pages/CSS/produitsbdd.css'
+
 
 export default function Prodbdd() {
   const [formdata, setFormData] = useState({ nom: '', description: '', prix: '', quantite: '', img: null ,});
@@ -135,7 +137,7 @@ console.log(formData)
                 <p> description: {prod.description}</p>
                 <p> prix: {prod.prix}</p>
                 <p> quantité: {prod.quantite}</p>
-                <img src={`http://localhost:4000/${prod.img}`} alt={prod.img} />
+                <img src={`http://localhost:4000/${prod.img}`} alt={prod.img} className="Prodbdd-image" />
 
                 <button onClick={() => setSelectedProductId(prod.puid)}>Update product</button>
                 <button onClick={() => handleDelete(prod.puid)}>Delete</button>

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { ShopContext } from '../Context/ShopContext.jsx'
-
+import axios from 'axios';
 const Cart = () => {
   const { produits, cartItems } = useContext(ShopContext);
 
@@ -19,6 +19,16 @@ const Cart = () => {
     return produitsDansPanier;
   };
 
+  
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:4000/api/prod/produit/${id}`);
+      console.log("Delete request executed successfully!");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   // Afficher les produits dans le panier
   const afficherProduitsDansPanier = () => {
     const produitsDansPanier = getProduitsDansPanier();
@@ -32,6 +42,7 @@ const Cart = () => {
               <p>Nom : {produit.nom}</p>
               <p>Prix : {produit.prix}</p>
               <p>Quantité : {produit.quantite}</p>
+              <button onClick={() => handleDelete(produit.puid)}>Delete</button>
             </div>
           ))}
           <p>Total : {calculerTotal()}$</p>
