@@ -107,32 +107,48 @@ exports.deleteProd = async (req, res) => {
         if (conn) conn.release();
     }
 };
-exports.decrementProd = async (req, res) => {
-    const puid = req.params.puid;
-    let conn;
+exports.decrementQuantity = async (req, res) => {
     try {
-      conn = await pool.getConnection();
-  
-    
-      const currentProduct = await conn.query('SELECT quantite FROM produit WHERE puid=?', [puid]);
-      const currentQuantite = currentProduct[0].quantite;
-  
-    
-      if (currentQuantite > 0) {
-       
-        const newQuantite = currentQuantite - 1;
+        const { puid } = req.params;
+        // Vérifiez d'abord si le produit existe
+        const [row] = await pool.query('SELECT quantite FROM produit WHERE puid = ?', [puid]);
+        console.log('row:', row); // Afficher les données retournées par la requête SQL
+        if (!row) {
+            return res.status(404).json({ error: 'Produit non trouvé' });
+        }
+
+        // Accédez directement à la propriété quantite de l'objet row
+        const newQuantity = row.quantite - 1;
+        if (newQuantity < 0) {
+            return res.status(400).json({ error: 'La quantité ne peut pas être inférieure à zéro' });
+        }
         
-     
-        await conn.query('UPDATE produit SET quantite=? WHERE puid=?', [newQuantite, puid]);
-  
+        await pool.query('UPDATE produit SET quantite = ? WHERE puid = ?', [newQuantity, puid]);
+
         res.status(200).json({ message: 'Quantité décrémentée avec succès' });
-      } else {
-        res.status(400).json({ message: 'La quantité du produit est déjà à zéro' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Erreur lors de la décrémentation de la quantité' });
+    }
+};
+
+exports.incrementQuantity = async (req, res) => {
+    try {
+      const { puid } = req.params;
+      // Vérifiez d'abord si le produit existe
+      const [rows] = await pool.query('SELECT quantite FROM produit WHERE puid = ?', [puid]);
+      if (rows.length === 0) {
+        return res.status(404).json({ error: 'Produit non trouvé' });
       }
-    } catch (err) {
-      console.error(err);
-      res.status(500).json({ error: 'Erreur lors de la décrémentation de la quantité du produit' });
-    } finally {
-      if (conn) conn.release();
+  
+      // Incrémentez la quantité du produit dans la base de données
+      const newQuantity = rows.quantite + 1;
+      await pool.query('UPDATE produit SET quantite = ? WHERE puid = ?', [newQuantity, puid]);
+  
+      res.status(200).json({ message: 'Quantité incrémentée avec succès' });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Erreur lors de l\'incrémentation de la quantité' });
     }
   };
+  
