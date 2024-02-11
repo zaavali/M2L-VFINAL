@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import {  useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import './CSS/Login.css'
@@ -16,7 +16,7 @@ export default function User() {
         e.preventDefault();
         console.log(formData);
         try {
-            await axios.post('http://localhost:4000/api/user/user', formData);
+            await axios.post('http://localhost:4000/api/user/ins', formData);
             console.log("Create request executed successfully!");
             // Set registration message on successful create
             setRegistrationMessage('Inscription réussie!');
@@ -27,16 +27,9 @@ export default function User() {
         }
     }
 
-    const recup = async () => {
-        await axios.get('http://localhost:4000/api/user/user').then((res) => {
-            console.log(res);
-          
-        });
-    }
+  
 
-    useEffect(() => {
-        recup();
-    }, []);
+   
 
     return (
         <div className='loginsignup'>

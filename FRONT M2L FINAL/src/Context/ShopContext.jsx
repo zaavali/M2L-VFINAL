@@ -32,18 +32,47 @@ const ShopContextProvider = (props) => {
     initialiserPanier();
   }, [produits]);
 
-  const addToCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
+  const addToCart = async (puid) => {
+    try {
+      // Vérifier si le produit existe déjà dans le panier local
+      const newCartItems = { ...cartItems };
+      if (newCartItems[puid] === undefined) {
+        newCartItems[puid] = 0;
+      }
+      // Décrémenter la quantité dans la base de données
+      await axios.put(`http://localhost:4000/api/prod/produit/${puid}/decrement`);
+      // Incrémenter la quantité dans le panier local
+      newCartItems[puid] += 1;
+      setCartItems(newCartItems);
+      console.log("La quantité a été décrémentée avec succès !");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const removeFromCart = (itemId) => {
-    setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
+  const removeFromCart = async (puid) => {
+    try {
+      // Incrémenter la quantité dans la base de données
+      await axios.put(`http://localhost:4000/api/prod/produit/${puid}/increment`);
+      // Mettre à jour le panier dans l'état local
+      setCartItems((prev) => {
+        const newCartItems = { ...prev };
+        if (newCartItems[puid] === undefined) {
+          newCartItems[puid] = 0;
+        }
+        newCartItems[puid] -= 1;
+        return newCartItems;
+      });
+      console.log("La quantité a été incrémentée avec succès !");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     produits.forEach((produit) => {
-      if (cartItems[produit.id] > 0) {
+      if (cartItems[produit.puid] > 0) {
         totalAmount += cartItems[produit.puid] * produit.prix;
       }
     });
