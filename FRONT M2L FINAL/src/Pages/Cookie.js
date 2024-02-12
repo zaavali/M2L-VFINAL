@@ -1,7 +1,7 @@
 const setCookie = (name, value, options, res) => {
-    // Construire la chaîne de cookie
+
     const cookieString = `${name}=${value}; ${optionsToString(options)}`;
-    // Définir le cookie en utilisant res.cookie()
+    
     res.cookie(name, value, options);
 }
 const getCookie = (name) => {
@@ -17,7 +17,7 @@ const getCookie = (name) => {
 }
 
 
-// Fonction utilitaire pour convertir les options de cookie en chaîne de texte
+
 const optionsToString = (options) => {
     if (!options) return '';
     const { maxAge, domain, path, expires, httpOnly, secure, sameSite } = options;

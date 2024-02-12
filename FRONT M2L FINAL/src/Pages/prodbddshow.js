@@ -23,10 +23,7 @@ export default function Prodbddshow() {
 
   return (
     <div className='popular'>
-      {/* <div>
      
-        {getTotalCartItems() > 0 && <span>{getTotalCartItems()}</span>}
-      </div> */}
       {affichage ? (
         produit.map((prod) => (
           <div key={prod.puid} className="product-item">

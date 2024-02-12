@@ -28,7 +28,7 @@ export default function Prodbdd() {
     e.preventDefault();
     console.log(puid);
     try {
-        // Assurez-vous que formdata.puid est défini avant d'envoyer la requête PUT
+        
         if (!puid) {
             console.error('Le puid du produit n\'est pas défini.');
             return;
@@ -36,7 +36,7 @@ export default function Prodbdd() {
 
         await axios.put(`http://localhost:4000/api/prod/produit/${puid}`, formdata);
         console.log("Update request executed successfully!");
-        setSelectedProductId(null); // Réinitialisez selectedProductId après la mise à jour
+        setSelectedProductId(null); 
     } catch (error) {
         console.error(error);
     }
@@ -54,7 +54,7 @@ export default function Prodbdd() {
     formData.append('quantite', formdata.quantite);
     formData.append('image', image);
 
-    // Afficher les clés et leurs valeurs dans la console
+   
     for (let pair of formData.entries()) {
       console.log(pair[0], pair[1]);
     }
@@ -65,7 +65,7 @@ console.log(formData)
           'Content-Type': 'multipart/form-data',
         },
       });
-      console.log(response.data); // Affiche la réponse du serveur
+      console.log(response.data); 
       console.log("Create request executed successfully!");
     } catch (error) {
       console.error(error);
@@ -99,32 +99,10 @@ console.log(formData)
     recup();
   }, []);
 
-  // return (
-  //   <div>
-  //     <h1>Products Test</h1>
-  //     {affichage ? (
-  //       produit.map((prod) => (
-         
-  //         <div key={prod.puid}>
-  //           <fieldset>
-  //             <p>id: {prod.puid}</p>
-  //             <p> nom: {prod.nom}</p>
-  //             <p> description: {prod.description}</p>
-  //             <p> prix: {prod.prix}</p>
-  //             <p> quantité: {prod.quantite}</p>
-  //             <img src={`http://localhost:4000/${prod.img}`} alt={prod.img} />
-              
-
-  //             <button onClick={() => handleDelete(prod.puid)}>Delete</button>
-  //           </fieldset>
-  //         </div>
-  //       ))
-  //     ) : (
-  //       <p>Chargement...</p>
-  //     )}
+ 
   return (
     <div>
-      <h1>Products Test</h1>
+      <h1>Liste des produits</h1>
       {affichage ? (
         produit.map((prod) => {
           const productToUpdate = produit.find((p) => p.puid === selectedProductId);
@@ -142,8 +120,8 @@ console.log(formData)
                 <button onClick={() => setSelectedProductId(prod.puid)}>Update product</button>
                 <button onClick={() => handleDelete(prod.puid)}>Delete</button>
               </fieldset>
-              <form onSubmit={(e) => handleSubmit(e, prod.puid)}> {/* Pass prod.puid to the handleSubmit function */}
-                {/* Rest of your form inputs */}
+              <form onSubmit={(e) => handleSubmit(e, prod.puid)}> 
+        
                 <input
                   onChange={(e) => handleChangeData(e)}
                   type='text'

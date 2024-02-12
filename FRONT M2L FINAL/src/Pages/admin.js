@@ -47,7 +47,7 @@ export default function Admin() {
 
   return (
     <div>
-      <h1>Connecté en tant qu'admin</h1>
+     
       <h1>Liste des utilisateurs</h1>
       {loading ? (
         <p>Chargement...</p>

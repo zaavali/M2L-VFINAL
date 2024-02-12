@@ -5,7 +5,6 @@ import axios from 'axios';
 const Cart = () => {
   const { produits, cartItems, removeFromCart  } = useContext(ShopContext);
 
-  // Fonction pour obtenir les informations sur les produits dans le panier
   const getProduitsDansPanier = () => {
     const produitsDansPanier = [];
     for (const idProduit in cartItems) {
@@ -20,13 +19,12 @@ const Cart = () => {
     return produitsDansPanier;
   };
 
-  // Supprimer un article du panier
- // Supprimer un article du panier
+
 const handleDelete = async (puid) => {
   try {
-    // Supprimer l'article du panier local en décrémentant sa quantité
+    
     removeFromCart(puid);
-    // Incrémenter la quantité dans la base de données
+    
     await axios.put(`http://localhost:4000/api/prod/produit/${puid}/increment`);
     console.log("Item removed from cart successfully!");
   } catch (error) {
@@ -34,7 +32,7 @@ const handleDelete = async (puid) => {
   }
 };
 
-  // Afficher les produits dans le panier
+
   const afficherProduitsDansPanier = () => {
     const produitsDansPanier = getProduitsDansPanier();
     if (produitsDansPanier.length === 0) {
@@ -56,7 +54,7 @@ const handleDelete = async (puid) => {
     }
   };
 
-  // Calculer le total du panier
+  
   const calculerTotal = () => {
     let total = 0;
     for (const idProduit in cartItems) {

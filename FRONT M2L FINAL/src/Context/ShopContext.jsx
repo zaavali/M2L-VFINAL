@@ -7,7 +7,7 @@ const ShopContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
   const [produits, setProduits] = useState([]);
 
-  // Fonction pour récupérer les données des produits depuis la base de données
+
   useEffect(() => {
     const fetchProduits = async () => {
       try {
@@ -20,7 +20,7 @@ const ShopContextProvider = (props) => {
     fetchProduits();
   }, []);
 
-  // Fonction pour initialiser le panier avec des quantités à zéro pour chaque produit
+ 
   useEffect(() => {
     const initialiserPanier = () => {
       const nouveauPanier = {};
@@ -34,14 +34,14 @@ const ShopContextProvider = (props) => {
 
   const addToCart = async (puid) => {
     try {
-      // Vérifier si le produit existe déjà dans le panier local
+     
       const newCartItems = { ...cartItems };
       if (newCartItems[puid] === undefined) {
         newCartItems[puid] = 0;
       }
-      // Décrémenter la quantité dans la base de données
+     
       await axios.put(`http://localhost:4000/api/prod/produit/${puid}/decrement`);
-      // Incrémenter la quantité dans le panier local
+      
       newCartItems[puid] += 1;
       setCartItems(newCartItems);
       console.log("La quantité a été décrémentée avec succès !");
@@ -52,9 +52,9 @@ const ShopContextProvider = (props) => {
 
   const removeFromCart = async (puid) => {
     try {
-      // Incrémenter la quantité dans la base de données
+    
       await axios.put(`http://localhost:4000/api/prod/produit/${puid}/increment`);
-      // Mettre à jour le panier dans l'état local
+  
       setCartItems((prev) => {
         const newCartItems = { ...prev };
         if (newCartItems[puid] === undefined) {

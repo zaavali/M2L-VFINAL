@@ -1,15 +1,4 @@
 
-// import './App.css';
-// import Navbar from './Components/Navbar/Navbar';
-// import { BrowserRouter,Routes,Route } from 'react-router-dom';
-// import Shop from './Pages/Shop';
-
-// import Product from './Pages/Product';
-// import Cart from './Pages/Cart';
-// import LoginSignUp from './Pages/LoginSignUp';
-// import Login from './Pages/Login';
-// import Footer from './Components/Footer/Footer';
-
 
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';

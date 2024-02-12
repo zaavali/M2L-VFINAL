@@ -9,13 +9,13 @@ export default function Connection() {
   const [formdata, setFormData] = useState({ email: '', mdp: '' });
   const [loginMessage, setLoginMessage] = useState('');
   const [isConnected, setIsConnected] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false); // Ajout de l'état isAdmin
+  const [isAdmin, setIsAdmin] = useState(false); 
 
   useEffect(() => {
     const token = Cookies.get('token');
     if (token) {
       setIsConnected(true);
-      // Vérifier le statut isAdmin si nécessaire
+      
     }
   }, []);
 
@@ -24,7 +24,7 @@ export default function Connection() {
     try {
       const response = await axios.post('http://localhost:4000/api/user/conn/', formdata);
       const token = response.data.token;
-      const isAdmin = response.data.isAdmin; // Extraire le statut isAdmin du token
+      const isAdmin = response.data.isAdmin; 
 
       Cookies.set('token', token, { expires: 2 / 24, secure: true, sameSite: 'strict' });
 
