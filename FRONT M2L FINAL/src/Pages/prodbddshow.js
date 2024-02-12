@@ -5,7 +5,7 @@ import { ShopContext } from '../Context/ShopContext.jsx';
 export default function Prodbddshow() {
   const [produit, setProduit] = useState([]);
   const [affichage, setAffichage] = useState(false);
-  const { getTotalCartItems, addToCart } = useContext(ShopContext);
+  const {  addToCart } = useContext(ShopContext);
 
   const recup = async () => {
     try {
@@ -23,10 +23,10 @@ export default function Prodbddshow() {
 
   return (
     <div className='popular'>
-      <div>
-        <img src="/chemin/vers/icon-panier.png" alt="Panier" />
+      {/* <div>
+     
         {getTotalCartItems() > 0 && <span>{getTotalCartItems()}</span>}
-      </div>
+      </div> */}
       {affichage ? (
         produit.map((prod) => (
           <div key={prod.puid} className="product-item">
