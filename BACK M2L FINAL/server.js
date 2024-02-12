@@ -13,11 +13,11 @@ app.use('/uploads', express.static('uploads'));
 app.use('/api/user', userRoute);
 app.use('/api/prod', prodRoute);
 
-// Utilisez la fonction getCookie dans une route
+
 app.get('/api/cookie', (req, res) => {
   const cookieValue = getCookie('cookieName', req);
-  // Faites quelque chose avec cookieValue si nécessaire
-  res.send(cookieValue); // Par exemple, vous pouvez l'envoyer en réponse
+ 
+  res.send(cookieValue); 
 });
 
 app.listen(4000, () => {
