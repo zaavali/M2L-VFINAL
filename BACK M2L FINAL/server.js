@@ -3,6 +3,7 @@ const cors = require('cors');
 const { getCookie } = require('../FRONT M2L FINAL/src/Pages/Cookie.js'); 
 const userRoute = require('./routes/userroute');
 const prodRoute = require('./routes/prodroute');
+const commandeRoute = require ('./routes/commandesroute');
 const cookieParser = require('cookie-parser');
 
 const app = express();
@@ -12,6 +13,10 @@ app.use(cors());
 app.use('/uploads', express.static('uploads'));
 app.use('/api/user', userRoute);
 app.use('/api/prod', prodRoute);
+app.use('/api/commande', commandeRoute);
+
+
+
 
 
 app.get('/api/cookie', (req, res) => {

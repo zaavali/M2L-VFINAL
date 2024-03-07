@@ -5,9 +5,10 @@ const middlewareAuth = require('../middleware/middleware');
 
 router.post('/ins', userController.postUser);
 router.post('/conn', userController.conn);
-router.put('/user/:id', userController.updateUser);
-router.delete('/user/:uuid', middlewareAuth.authenticator, userController.deleteUser);
+router.delete('/user/:uuid', userController.deleteUser);
 router.post('/logout', userController.handleLogout);
-router.get('/user', middlewareAuth.authenticator, userController.getAllUser);
+router.get('/user', userController.getAllUser);
+// router.get('/autorisation',userController.getAllUser );
+
 
 module.exports = router;

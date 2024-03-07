@@ -12,4 +12,5 @@ router.delete('/produit/:puid', prodController.deleteProd);
 router.put('/produit/:puid/decrement', prodController.decrementQuantity);
 router.put('/produit/:puid/increment', prodController.incrementQuantity);
 
+
 module.exports = router;

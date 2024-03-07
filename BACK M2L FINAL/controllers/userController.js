@@ -56,7 +56,7 @@ exports.postUser = async (req, res) => {
 exports.conn = async (req, res) => {
     const { email, mdp } = req.body;
 
-    const query = 'SELECT email, mdp, admin FROM user WHERE email = ?';
+    const query = 'SELECT uuid,email, mdp, admin FROM user WHERE email = ?';
 
     try {
         const conn = await pool.getConnection();
@@ -74,7 +74,8 @@ exports.conn = async (req, res) => {
 
                 const tokenPayload = {
                     email: user.email,
-                    isAdmin: user.admin === 1
+                    isAdmin: user.admin === 1,
+                    uuid: user["uuid"]
                 };
 
                 const token = jwt.sign(tokenPayload, process.env.API_KEY, { expiresIn: '1h' });
@@ -96,25 +97,7 @@ exports.conn = async (req, res) => {
     }
 };
 
-exports.updateUser = async (req, res) => {
-    const { uuid, nom, email, mdp, admin } = req.body;
-    const adminValue = isNaN(parseInt(admin)) ? 0 : parseInt(admin);
-    let conn;
-    try {
-        conn = await pool.getConnection();
 
-        const hashedPassword = await bcrypt.hash(mdp, 10);
-
-        const rows = await conn.query("UPDATE user SET nom=?, email=?, mdp=?, admin=? WHERE uuid=?", [nom, email, hashedPassword, adminValue, uuid]);
-
-        res.status(200).json(rows.affectedRows);
-    } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: 'Internal Server Error' });
-    } finally {
-        if (conn) conn.release();
-    }
-};
 
 exports.deleteUser = async (req, res) => {
     const uuid = req.params.uuid;
@@ -179,5 +162,27 @@ exports.handleLogout = async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Erreur de serveur lors de la déconnexion' });
+    }
+};
+
+exports.autorisation = async (req, res) => {
+    try {
+       
+        const token = req.cookies.token;
+
+       
+        if (!token) {
+            return res.status(401).json({ message: 'Token non fourni' });
+        }
+
+       
+        const decodedToken = jwt.verify(token, process.env.API_KEY);
+        const isAdmin = decodedToken.isAdmin;
+
+       
+        res.status(200).json({ isAdmin });
+    } catch (error) {
+        console.error('Erreur lors de la vérification du statut administratif :', error);
+        res.status(500).json({ message: 'Erreur de serveur lors de la vérification du statut administratif' });
     }
 };
