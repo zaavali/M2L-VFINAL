@@ -15,7 +15,7 @@ export default function Admin() {
           Authorization: `Bearer ${storedToken}`
         }
       };
-      axios.get('http://localhost:4000/api/user/user', config) // Endpoint pour récupérer la liste des utilisateurs
+      axios.get('http://localhost:4000/api/user/user', config) 
       .then(response => {
         setUsers(response.data);
         setLoading(false);
@@ -31,12 +31,12 @@ export default function Admin() {
     if (storedToken) {
       const config = {
         headers: {
-          Authorization: `Bearer ${storedToken}`
+          // Authorization: `Bearer ${storedToken}`
         }
       };
-      axios.delete(`http://localhost:4000/api/user/user/${uuid}`, config) // Endpoint pour supprimer l'utilisateur
+      axios.delete(`http://localhost:4000/api/user/user/${uuid}`, config) 
         .then(() => {
-          // Mettre à jour la liste des utilisateurs après la suppression
+          
           setUsers(users.filter(user => user.uuid !== uuid));
         })
         .catch(error => {

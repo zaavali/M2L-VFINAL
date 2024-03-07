@@ -1,34 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import './CSS/Login.css';
-import Admin from './admin';
+import Admin from './admin'; // Importe le composant Admin
 import { Link } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-export default function Connection() {
+export default function Connection({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) {
   const [formdata, setFormData] = useState({ email: '', mdp: '' });
   const [loginMessage, setLoginMessage] = useState('');
-  const [isConnected, setIsConnected] = useState(false);
-  const [isAdmin, setIsAdmin] = useState(false); 
-
-  useEffect(() => {
-    const token = Cookies.get('token');
-    if (token) {
-      setIsConnected(true);
-      
-    }
-  }, []);
 
   const handleLog = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:4000/api/user/conn/', formdata);
+      
       const token = response.data.token;
-      const isAdmin = response.data.isAdmin; 
+      const isAdmin = response.data.isAdmin;
 
-      Cookies.set('token', token, { expires: 2 / 24, secure: true, sameSite: 'strict' });
-
-      setIsConnected(true);
+      Cookies.set('token', `Bearer ${token}`, { expires: 2 / 24, secure: true, sameSite: 'strict' });
+      console.log('Token stocké dans le cookie :', Cookies.get('token'));
+      setIsLoggedIn(true);
       setIsAdmin(isAdmin);
 
     } catch (error) {
@@ -37,20 +28,9 @@ export default function Connection() {
     }
   };
 
-  const handleLogout = async () => {
-    try {
-      await axios.post('http://localhost:4000/api/user/logout');
-      Cookies.remove('token');
-      setIsConnected(false);
-      setIsAdmin(false);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   return (
     <>
-      {isConnected ? (
+      {isLoggedIn ? (
         <div>
           <h1>Vous êtes connecté</h1>
           {isAdmin ? (
@@ -61,7 +41,6 @@ export default function Connection() {
           ) : (
             <p>Connecté en tant qu'utilisateur</p>
           )}
-          <button onClick={handleLogout}>Se déconnecter</button>
         </div>
       ) : (
         <div className='loginsignup'>
@@ -92,4 +71,3 @@ export default function Connection() {
     </>
   );
 }
-

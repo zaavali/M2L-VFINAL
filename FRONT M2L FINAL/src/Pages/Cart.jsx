@@ -1,9 +1,15 @@
-import React, { useContext } from 'react';
-import { ShopContext } from '../Context/ShopContext.jsx'
+import React, { useContext, useEffect, useState } from 'react';
+import { ShopContext } from '../Context/ShopContext.jsx';
 import axios from 'axios';
+import Cookies from 'js-cookie';
+
+
 
 const Cart = () => {
-  const { produits, cartItems, removeFromCart  } = useContext(ShopContext);
+  const { produits, cartItems, removeFromCart } = useContext(ShopContext);
+  const [userUuid, setUserUuid] = useState('');
+
+ 
 
   const getProduitsDansPanier = () => {
     const produitsDansPanier = [];
@@ -19,19 +25,42 @@ const Cart = () => {
     return produitsDansPanier;
   };
 
+  const handleDelete = async (puid) => {
+    try {
+      removeFromCart(puid);
+      await axios.put(`http://localhost:4000/api/prod/produit/${puid}/increment`);
+      console.log("Item removed from cart successfully!");
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-const handleDelete = async (puid) => {
-  try {
-    
-    removeFromCart(puid);
-    
-    await axios.put(`http://localhost:4000/api/prod/produit/${puid}/increment`);
-    console.log("Item removed from cart successfully!");
-  } catch (error) {
-    console.error(error);
-  }
-};
+  const envoyerCommandeBackend = async (commande) => {
+    try {
+      const token = Cookies.get('token');
+      const response = await axios.post('http://localhost:4000/api/commande/valider', commande, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log("Commande envoyée au Backend !");
+    } catch (error) {
+      console.error("Erreur lors de l'envoi de la commande au backend :", error);
+    }
+  };
+  
 
+  const validerCommande = () => {
+    const produitsDansPanier = getProduitsDansPanier();
+    const commande = {
+      produits: produitsDansPanier,
+      montantTotal: calculerTotal(),
+      uuid: userUuid, 
+    };
+    console.log('UUID de l\'utilisateur:', userUuid);
+    localStorage.setItem('commande', JSON.stringify(commande));
+    envoyerCommandeBackend(commande);
+  };
 
   const afficherProduitsDansPanier = () => {
     const produitsDansPanier = getProduitsDansPanier();
@@ -49,12 +78,12 @@ const handleDelete = async (puid) => {
             </div>
           ))}
           <p>Total : {calculerTotal()}$</p>
+          <button onClick={validerCommande}>Valider la commande</button>
         </div>
       );
     }
   };
 
-  
   const calculerTotal = () => {
     let total = 0;
     for (const idProduit in cartItems) {
