@@ -4,10 +4,10 @@
     justify-content: center;
     align-items: center;
     gap: 50px;
-    margin-top: auto; /* Cela pousse le footer vers le bas */
-    padding: 20px 0; /* Ajoutez un rembourrage selon vos besoins */
-    background-color: #ffffff; /* Couleur de fond de votre choix */
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Ombre pour un aspect flottant */
+    margin-top: auto;
+    padding: 80px 0; 
+    background-color: #ffffff; 
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); 
     width: 100%;
 }
 

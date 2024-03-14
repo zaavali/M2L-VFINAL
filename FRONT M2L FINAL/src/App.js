@@ -25,8 +25,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Shop isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
           <Route path="/badminton" element={<Prodbddshow isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
-          <Route path="/basket" element={<Prodbddshow isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
-          <Route path="/tennis" element={<Prodbddshow isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
+          {/* <Route path="/basket" element={<Prodbddshow isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
+          <Route path="/tennis" element={<Prodbddshow isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} /> */}
           <Route path="/product" element={<Product isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>}>
             <Route path=":productId" element={<Product isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
           </Route>

@@ -3,6 +3,7 @@ import './Hero.css'
 
 import arrow_icon from '../Assets/arrow.png'
 import hero_image from '../Assets/hero_image.png'
+import fond_accueil from '../Assets/fond_accueil.png'
 
 
 const Hero = () => {
@@ -18,13 +19,13 @@ const Hero = () => {
                 <p>La Maison des Ligues</p>
             </div>
            <div className="hero-latest-btn">
-                <div>Nouveautés</div>
+                <div>Voir nos produits</div>
                 <img src={arrow_icon} alt="" />
            </div>
         </div>
 
         <div className="hero-right">
-            <img src={hero_image} alt="" />
+          
 
         </div>
     </div>

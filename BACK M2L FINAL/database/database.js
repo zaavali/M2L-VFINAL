@@ -1,5 +1,6 @@
 const mariadb = require('mariadb');
-require('dotenv').config();
+require('dotenv').config({ path: '../.env' });
+
 
 
 const pool = mariadb.createPool({
@@ -12,4 +13,4 @@ const pool = mariadb.createPool({
     acquireTimeout: 30000, 
   });
 
-  module.exports = { pool: pool};
+module.exports = { pool: pool};

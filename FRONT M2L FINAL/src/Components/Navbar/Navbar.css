@@ -22,6 +22,7 @@
 }
 
 .nav-menu{
+    text-decoration: none;
     display: flex;
     align-items: center;
     list-style: none;
@@ -40,12 +41,17 @@
     cursor: pointer;
 }
 
+.nav-menu li a {
+    text-decoration: none;
+    color: #303030; /* Couleur par défaut des liens */
+}
+
 .nav-menu hr{
     border: none;
     width: 80%;
     height: 3px;
     border-radius: 10px;
-    background-color: #FF4141;
+    background-color: #F38148;
 }
 
 .nav-login-cart{
@@ -85,3 +91,11 @@
     background: red;
     color: white;
 }
+
+.nav-button {
+    margin: 0 20px; 
+
+  }
+  
+
+  

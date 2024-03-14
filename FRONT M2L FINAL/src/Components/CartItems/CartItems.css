@@ -28,12 +28,7 @@
     margin: 0px 40px;
     cursor: pointer;
 }
-.cartitems-quantity{
-    width: 64px;
-    height: 50px;
-    border: 2px solid #ebebeb;
-    background: #fff;
-}
+
 .cartitems-down{
     display: flex;
     margin: 100px 0px;

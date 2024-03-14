@@ -1,59 +1,35 @@
 import React, { useContext } from 'react';
 import './ProductDisplay.css'
-import star_icon from '../Assets/star_icon.png'
-import star_dull_icon from '../Assets/star_dull_icon.png'
 import { ShopContext } from '../../Context/ShopContext'
 
-const ProductDisplay = (props) => {
+const ProductDisplay = ({ product }) => {
+    const { addToCart } = useContext(ShopContext);
 
-    const {product} = props;
-    const {addToCart} = useContext(ShopContext);
+    // Directly use the provided product properties.
+    // Ensure these match with your actual product object structure.
     return (
         <div className="productdisplay">
             <div className="productdisplay-left">
                 <div className="productdisplay-img-list">
-                    <img src={product.image} alt="" />
-                    <img src={product.image} alt="" />
-                    <img src={product.image} alt="" />
-                    <img src={product.image} alt="" />
-                </div>
-                <div className="productdisplay-img">
-                    <img className='productdisplay-main-img' src={product.image} alt="" />
+                    <img src={`http://localhost:4000/${product.img}`} alt={product.nom} className='productdisplay-main-img'/>
+
+                    {/* If you have more images, list them here */}
                 </div>
             </div>
             <div className="productdisplay-right">
-                <h1>{product.name}</h1>
-                <div className="productdisplay-right-stars">
-                    <img src={star_icon} alt="" />
-                    <img src={star_icon} alt="" />
-                    <img src={star_icon} alt="" />
-                    <img src={star_icon} alt="" />
-                    <img src={star_dull_icon} alt="" />
-                    <p>(122)</p>
-                </div>
+                <h1>{product.nom}</h1>
                 <div className="productdisplay-right-prices">
-                    <div className="productdisplay-right-price-old">{product.old_price} €</div>
-                    <div className="productdisplay-right-price-new">{product.new_price} €</div>
+                    {/* Assuming product.old_price exists */}
+                    {product.old_price && <div className="productdisplay-right-price-old">{product.old_price} €</div>}
+                    <div className="productdisplay-right-price-new">{product.prix} €</div>
                 </div>
-                <div className="productdisplay-right-description">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi efficitur fermentum dolor vel dapibus. In et mi massa. Nulla metus enim, iaculis nec lacus sit amet, cursus gravida tortor.
-                </div>
-                <div className="productdisplay-right-size">
-                    <h1>Sélectionnez la taille</h1>
-                    <div className="productdisplay-right-sizes">
-                        <div>S</div>
-                        <div>M</div>
-                        <div>L</div>
-                        <div>XL</div>
-                        <div>XXL</div>
-                    </div>
-                </div>
-                <button onClick={()=>{addToCart(product.id)}}>AJOUTER AU PANIER</button>
-                <p className='productdisplay-right-category'><span>Catégorie : </span>Femme , T-Shirt , Crop Top</p>
-                <p className='productdisplay-right-category'><span>Tag : </span>Moderne, Nouveau</p>
+                {/* Assuming product.description exists */}
+                {product.description && <div className="productdisplay-right-description">{product.description}</div>}
+                <button onClick={() => addToCart(product.puid)}>Ajouter au panier</button>
             </div>
         </div>
-    )
-}
+    );
+};
+
 
 export default ProductDisplay;

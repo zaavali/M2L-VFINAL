@@ -2,6 +2,8 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ShopContext } from '../Context/ShopContext.jsx';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import './CSS/Cart.css';
+import remove_icon from '../Components/Assets/cart_cross_icon.png';
 
 
 
@@ -62,28 +64,6 @@ const Cart = () => {
     envoyerCommandeBackend(commande);
   };
 
-  const afficherProduitsDansPanier = () => {
-    const produitsDansPanier = getProduitsDansPanier();
-    if (produitsDansPanier.length === 0) {
-      return <p>Votre panier est vide.</p>;
-    } else {
-      return (
-        <div>
-          {produitsDansPanier.map((produit) => (
-            <div key={produit.puid}>
-              <p>Nom : {produit.nom}</p>
-              <p>Prix : {produit.prix}</p>
-              <p>Quantité : {produit.quantite}</p>
-              <button onClick={() => handleDelete(produit.puid)}>Supprimer</button>
-            </div>
-          ))}
-          <p>Total : {calculerTotal()}$</p>
-          <button onClick={validerCommande}>Valider la commande</button>
-        </div>
-      );
-    }
-  };
-
   const calculerTotal = () => {
     let total = 0;
     for (const idProduit in cartItems) {
@@ -98,12 +78,64 @@ const Cart = () => {
     return total;
   };
 
+  const afficherProduitsDansPanier = () => {
+    const produitsDansPanier = getProduitsDansPanier();
+    if (produitsDansPanier.length === 0) {
+      return (
+        <div className="center-content">
+          <p>Votre panier est vide.</p>
+        </div>
+      );
+    } else {  
+      return (
+        <div className='cartitems'>
+          <div className="cartitems-format-main">
+            <p>Produits</p>
+            <p>Nom</p>
+            <p>Prix</p>
+            <p>Quantité</p>
+            <p>Total</p>
+            <p>Supprimer</p>
+          </div>
+          <hr />
+          {produitsDansPanier.map((produit) => (
+  <div key={produit.puid}>
+    <div className="cartitems-format cartitems-format-main">
+      <p><img className="product-image" src={`http://localhost:4000/${produit.img}`} alt={produit.nom} /></p>
+      <p>{produit.nom}</p>
+      <p>{produit.prix} €</p>
+      <p>{produit.quantite}</p>
+      <p>{produit.quantite * produit.prix} €</p>
+      <img className='cartitems-remove-icon' src={remove_icon} onClick={() => handleDelete(produit.puid)} alt="Supprimer" />
+    </div>
+    <hr />
+  </div>
+))}
+
+          <div className="cartitems-down">
+            <div className="cartitems-total">
+                
+                  <p className='total'>Total : {calculerTotal()} €</p>
+               
+              <button onClick={validerCommande}>COMMANDER</button>
+            </div>
+          </div>
+        </div>
+      );
+    }
+  };
+
   return (
     <div>
-      <h2>Votre panier :</h2>
+      <div className="cartitems-down">
+        <div className="cartitems-total">
+            <h1 className="titre-mon-panier">Mon panier</h1>
+        </div>
+      </div>
       {afficherProduitsDansPanier()}
     </div>
   );
+  
 };
 
 export default Cart;

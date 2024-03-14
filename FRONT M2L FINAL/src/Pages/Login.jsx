@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './CSS/Login.css';
-import Admin from './admin'; // Importe le composant Admin
-import { Link } from 'react-router-dom';
+import Admin from './admin'; 
+import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
+
+
 
 export default function Connection({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) {
   const [formdata, setFormData] = useState({ email: '', mdp: '' });
   const [loginMessage, setLoginMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleLog = async (e) => {
     e.preventDefault();
@@ -21,6 +24,8 @@ export default function Connection({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAd
       console.log('Token stocké dans le cookie :', Cookies.get('token'));
       setIsLoggedIn(true);
       setIsAdmin(isAdmin);
+
+      navigate('/');
 
     } catch (error) {
       console.error(error);

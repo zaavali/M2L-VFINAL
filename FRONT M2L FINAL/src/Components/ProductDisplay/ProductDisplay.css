@@ -12,11 +12,12 @@
     gap: 16px;
 }
 .productdisplay-img-list img{
-    height: 163px;
+    height: 320px;
 }
 .productdisplay-main-img{
     width: 586px;
-    height: 700px;
+    height: auto; /* Ou 'auto' si vous préférez */
+    object-fit: contain;
 }
 .productdisplay-right{
     margin: 0px 70px;
@@ -28,14 +29,7 @@
     font-size: 40px;
     font-weight: 700;
 }
-.productdisplay-right-stars{
-    display: flex;
-    align-items: center;
-    margin-top: 13px;
-    gap: 5px;
-    color: #1c1c1c;
-    font-size: 16px;
-}
+
 .productdisplay-right-prices{
     display: flex;
     margin: 40px 0px;
@@ -43,13 +37,13 @@
     font-size: 24px;
     font-weight: 700;
 }
-.productdisplay-right-price-old{
+/* .productdisplay-right-price-old{
     color: #818181;
     text-decoration: line-through;
 }
 .productdisplay-right-price-new{
     color: #ff4141;
-}
+} */
 .productdisplay-right-size h1{
     margin-top: 55px;
     color: #656565;
@@ -69,20 +63,27 @@
     cursor: pointer;
 }
 .productdisplay-right button{
-    padding: 20px 40px;
-    width: 200px;
-    font-size: 16px;
-    font-weight: 600;
-    color: white;
-    background: #FF4141;
-    margin-bottom: 40px;
-    border: none;
-    outline: none;
-    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Ajustez si nécessaire selon votre design */
+    width: 203px; /* Ou auto si vous préférez que le bouton s'ajuste au texte */
+    height: 60px;
+    border-radius: 73px;
+    margin-top: 45px; /* Ajustez selon l'espacement désiré avec les éléments au-dessus */
+    background-color: #ff4141; /* La couleur de fond du bouton */
+    color: white; /* La couleur du texte */
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer; /* Pour indiquer que c'est cliquable */
+    border: none; /* Pour enlever la bordure par défaut des boutons */
+    outline: none; /* Pour enlever le focus outline pour une apparence plus nette */
 }
+
 .productdisplay-right-category{
     margin-top: 10px;
 }
 .productdisplay-right-category span{
     font-weight: 600;
 }
+
