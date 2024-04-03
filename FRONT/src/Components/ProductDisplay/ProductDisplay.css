@@ -1,0 +1,89 @@
+.productdisplay{
+    display: flex;
+    margin: 0px 170px;
+}
+.productdisplay-left{
+    display: flex;
+    gap: 17px;
+}
+.productdisplay-img-list{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.productdisplay-img-list img{
+    height: 320px;
+}
+.productdisplay-main-img{
+    width: 586px;
+    height: auto; /* Ou 'auto' si vous préférez */
+    object-fit: contain;
+}
+.productdisplay-right{
+    margin: 0px 70px;
+    display: flex;
+    flex-direction: column;
+}
+.productdisplay-right h1{
+    color: #3d3d3d;
+    font-size: 40px;
+    font-weight: 700;
+}
+
+.productdisplay-right-prices{
+    display: flex;
+    margin: 40px 0px;
+    gap: 30px;
+    font-size: 24px;
+    font-weight: 700;
+}
+/* .productdisplay-right-price-old{
+    color: #818181;
+    text-decoration: line-through;
+}
+.productdisplay-right-price-new{
+    color: #ff4141;
+} */
+.productdisplay-right-size h1{
+    margin-top: 55px;
+    color: #656565;
+    font-size: 20px;
+    font-weight: 600;
+}
+.productdisplay-right-sizes{
+    display: flex;
+    margin: 30px 0px;
+    gap: 20px;
+}
+.productdisplay-right-sizes div{
+    padding: 18px 24px;
+    background: #fbfbfb;
+    border: 1px solid #ebebeb;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.productdisplay-right button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Ajustez si nécessaire selon votre design */
+    width: 203px; /* Ou auto si vous préférez que le bouton s'ajuste au texte */
+    height: 60px;
+    border-radius: 73px;
+    margin-top: 45px; /* Ajustez selon l'espacement désiré avec les éléments au-dessus */
+    background-color: #ff4141; /* La couleur de fond du bouton */
+    color: white; /* La couleur du texte */
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer; /* Pour indiquer que c'est cliquable */
+    border: none; /* Pour enlever la bordure par défaut des boutons */
+    outline: none; /* Pour enlever le focus outline pour une apparence plus nette */
+}
+
+.productdisplay-right-category{
+    margin-top: 10px;
+}
+.productdisplay-right-category span{
+    font-weight: 600;
+}
+

@@ -1,0 +1,6 @@
+.Prodbdd-image {
+    width: 100px; /* Définir une largeur fixe pour toutes les images */
+    height: 100px; /* Définir une hauteur fixe pour toutes les images */
+    object-fit: cover; /* Pour s'assurer que l'image couvre entièrement la zone définie */
+    border-radius: 50%; /* Pour arrondir les coins de l'image, utile si vous affichez des images de produit */
+  }

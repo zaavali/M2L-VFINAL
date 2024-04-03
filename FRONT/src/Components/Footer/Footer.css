@@ -1,0 +1,39 @@
+.footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    margin-top: auto;
+    padding: 80px 0; 
+    background-color: #ffffff; 
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); 
+    width: 100%;
+}
+
+/* Styles pour le logo */
+.logo-img {
+    width: 130px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-logo p {
+    color: #383838;
+    font-size: 40px;
+    font-weight: 700;
+}
+
+/* Styles pour les liens du footer */
+.footer-links {
+    display: flex;
+    list-style: none;
+    gap: 50px;
+    color: #252525;
+    font-size: 20px;
+}
+

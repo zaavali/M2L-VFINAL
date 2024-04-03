@@ -1,0 +1,33 @@
+.shopcategory-products{
+    margin: 20px 170px; /* Vous pouvez réduire cette marge si nécessaire */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Ajustez cette partie pour changer la taille des colonnes */
+    gap: 40px 20px; /* Réduit l'espacement entre les produits (espace vertical, espace horizontal) */
+ }
+ 
+ /* Pour augmenter la taille de chaque produit, ajustez la taille des images et des conteneurs de produits */
+ .adjustedimg {
+     width: 100%; /* Ajustez la largeur de l'image pour qu'elle remplisse son conteneur */
+     height: auto; /* Garde le ratio d'aspect de l'image */
+ }
+ 
+ .item {
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     padding: 10px; /* Ajoutez ou ajustez le padding pour contrôler l'espace autour du contenu de chaque produit */
+ }
+ 
+ .item-price {
+     font-weight: bold; /* Rend le prix en gras */
+     text-align: center; /* Centre le prix par rapport à l'image au-dessus */
+ }
+ 
+ /* Ajout pour centrer le nom des produits et ajuster l'espacement */
+ .item div:first-child p {
+     font-weight: normal; /* Assurez-vous que le nom du produit n'est pas en gras */
+     text-align: center; /* Centre le nom du produit */
+     margin-top: 10px; /* Ajuste l'espace au-dessus du nom du produit */
+     margin-bottom: 5px; /* Ajuste l'espace en dessous du nom du produit */
+ }
+ 
