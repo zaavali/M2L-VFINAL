@@ -11,7 +11,7 @@ const ShopContextProvider = (props) => {
   useEffect(() => {
     const fetchProduits = async () => {
       try {
-        const response = await axios.get('http://192.168.1.420/api/prod/produit');
+        const response = await axios.get('http://localhost:4000/api/prod/produit');
         setProduits(response.data);
       } catch (error) {
         console.error(error);
@@ -40,7 +40,7 @@ const ShopContextProvider = (props) => {
         newCartItems[puid] = 0;
       }
      
-      await axios.put(`http://192.168.1.420/api/prod/produit/${puid}/decrement`);
+      await axios.put(`http://localhost:4000/api/prod/produit/${puid}/decrement`);
       
       newCartItems[puid] += 1;
       setCartItems(newCartItems);
@@ -53,7 +53,7 @@ const ShopContextProvider = (props) => {
   const removeFromCart = async (puid) => {
     try {
     
-      await axios.put(`http://192.168.1.420/api/prod/produit/${puid}/increment`);
+      await axios.put(`http://localhost:4000/api/prod/produit/${puid}/increment`);
   
       setCartItems((prev) => {
         const newCartItems = { ...prev };

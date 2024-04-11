@@ -15,12 +15,12 @@ export default function Connection({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAd
   const handleLog = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://192.168.1.420/api/user/conn/', formdata);
+      const response = await axios.post('http://localhost:4000/api/user/conn/', formdata);
       
       const token = response.data.token;
       const isAdmin = response.data.isAdmin;
 
-      Cookies.set('token', `Bearer ${token}`, { expires: 2 / 24, secure: true, sameSite: 'strict' });
+      Cookies.set('token', `${token}`, { expires: 2 / 24, secure: false});
       console.log('Token stocké dans le cookie :', Cookies.get('token'));
       setIsLoggedIn(true);
       setIsAdmin(isAdmin);
