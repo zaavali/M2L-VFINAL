@@ -16,7 +16,7 @@
 }
 .productdisplay-main-img{
     width: 586px;
-    height: auto; /* Ou 'auto' si vous préférez */
+    height: auto;
     object-fit: contain;
 }
 .productdisplay-right{
@@ -66,18 +66,18 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 15px; /* Ajustez si nécessaire selon votre design */
-    width: 203px; /* Ou auto si vous préférez que le bouton s'ajuste au texte */
+    gap: 15px;
+    width: 203px; 
     height: 60px;
     border-radius: 73px;
-    margin-top: 45px; /* Ajustez selon l'espacement désiré avec les éléments au-dessus */
-    background-color: #ff4141; /* La couleur de fond du bouton */
-    color: white; /* La couleur du texte */
+    margin-top: 45px; 
+    background-color: #F38148; 
+    color: white;
     font-size: 18px;
     font-weight: 500;
-    cursor: pointer; /* Pour indiquer que c'est cliquable */
-    border: none; /* Pour enlever la bordure par défaut des boutons */
-    outline: none; /* Pour enlever le focus outline pour une apparence plus nette */
+    cursor: pointer;
+    border: none;
+    outline: none;
 }
 
 .productdisplay-right-category{

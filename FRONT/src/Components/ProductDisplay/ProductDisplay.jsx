@@ -11,7 +11,11 @@ const ProductDisplay = ({ product }) => {
         <div className="productdisplay">
             <div className="productdisplay-left">
                 <div className="productdisplay-img-list">
+<<<<<<< HEAD
                     <img src={`http://localhost:4000/${product.img}`} alt={product.nom} className='productdisplay-main-img'/>
+=======
+                    <img src={`http://192.168.1.42:4000/${product.img}`} alt={product.nom} className='productdisplay-main-img'/>
+>>>>>>> e9d59a900aec3130e8399437d8de9f15113fa447
 
                     {/* If you have more images, list them here */}
                 </div>

@@ -1,9 +1,14 @@
-.navbar{
+.navbar {
     display: flex;
     justify-content: space-around;
     padding: 16px;
     box-shadow: 0 1px 3px -2px black;
 }
+
+.navbar a {
+    text-decoration: none !important; /* Supprime le soulignement pour tous les liens à l'intérieur de la barre de navigation */
+}
+
 
 .nav-logo{
     display: flex;
