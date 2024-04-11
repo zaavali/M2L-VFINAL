@@ -15,11 +15,7 @@ export default function Admin() {
      
         }
       };
-<<<<<<< HEAD
-      axios.get('http://localhost:4000/api/user/user', config)
-=======
       axios.get('http://192.168.1.42:4000/api/user/user', config)
->>>>>>> e9d59a900aec3130e8399437d8de9f15113fa447
         .then(response => {
           setUsers(response.data);
           setLoading(false);
@@ -38,11 +34,7 @@ export default function Admin() {
          
         }
       };
-<<<<<<< HEAD
-      axios.delete(`http://localhost:4000/api/user/user/${uuid}`, config)
-=======
       axios.delete(`http://192.168.1.42:4000/api/user/user/${uuid}`, config)
->>>>>>> e9d59a900aec3130e8399437d8de9f15113fa447
         .then(() => {
           setUsers(users.filter(user => user.uuid !== uuid));
         })

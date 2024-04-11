@@ -17,11 +17,7 @@ export default function User() {
         e.preventDefault()
         console.log(formdata)
         try {
-<<<<<<< HEAD
-            await axios.post('http://localhost:4000/api/user/user', formdata);
-=======
             await axios.post('http://192.168.1.42:4000/api/user/user', formdata);
->>>>>>> e9d59a900aec3130e8399437d8de9f15113fa447
             console.log("Create request executed successfully!");
         } catch (error) {
             console.error(error);
@@ -30,11 +26,7 @@ export default function User() {
 
   
     const recup = async () => {
-<<<<<<< HEAD
-        await axios.get('http://localhost:4000/api/user/user').then((res) => {
-=======
         await axios.get('http://192.168.1.42:4000/api/user/user').then((res) => {
->>>>>>> e9d59a900aec3130e8399437d8de9f15113fa447
             console.log(res)
             setUser(res.data)
             setAffichage(true)

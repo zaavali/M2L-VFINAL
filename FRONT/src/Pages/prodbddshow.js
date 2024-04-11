@@ -11,11 +11,7 @@ export default function Prodbddshow() {
 
   const recup = async () => {
     try {
-<<<<<<< HEAD
-      const response = await axios.get('http://localhost:4000/api/prod/produit');
-=======
       const response = await axios.get('http://192.168.1.42:4000/api/prod/produit');
->>>>>>> e9d59a900aec3130e8399437d8de9f15113fa447
       setProduit(response.data);
       setAffichage(true);
     } catch (error) {
@@ -35,11 +31,7 @@ export default function Prodbddshow() {
             <div key={prod.puid} className="item">
               {/* Utilisez Link pour entourer l'image */}
               <Link to={`/product/${prod.puid}`}>
-<<<<<<< HEAD
-                <img src={`http://localhost:4000/${prod.img}`} alt={prod.img} className="adjustedimg" onClick={() => window.scrollTo(0, 0)}/>
-=======
                 <img src={`http://192.168.1.42:4000/${prod.img}`} alt={prod.img} className="adjustedimg" onClick={() => window.scrollTo(0, 0)}/>
->>>>>>> e9d59a900aec3130e8399437d8de9f15113fa447
               </Link>
               <p>{prod.nom}</p>
               <div>
