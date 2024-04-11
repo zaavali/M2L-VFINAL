@@ -34,7 +34,7 @@ export default function Prodbdd() {
             return;
         }
 
-        await axios.put(`http://localhost:4000/api/prod/produit/${puid}`, formdata);
+        await axios.put(`http://192.168.1.420/api/prod/produit/${puid}`, formdata);
         console.log("Update request executed successfully!");
         setSelectedProductId(null); 
     } catch (error) {
@@ -60,7 +60,7 @@ export default function Prodbdd() {
     }
 console.log(formData)
     try {
-      const response = await axios.post('http://localhost:4000/api/prod/produit', formData, {
+      const response = await axios.post('http://192.168.1.420/api/prod/produit', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -75,7 +75,7 @@ console.log(formData)
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:4000/api/prod/produit/${id}`);
+      await axios.delete(`http://192.168.1.420/api/prod/produit/${id}`);
       console.log("Delete request executed successfully!");
     } catch (error) {
       console.error(error);
@@ -84,7 +84,7 @@ console.log(formData)
 
   const recup = async () => {
     try {
-      const response = await axios.get('http://localhost:4000/api/prod/produit');
+      const response = await axios.get('http://192.168.1.420/api/prod/produit');
       console.log(response);
       setUser(response.data);
       setAffichage(true);
@@ -115,7 +115,7 @@ console.log(formData)
                 <p> description: {prod.description}</p>
                 <p> prix: {prod.prix}</p>
                 <p> quantité: {prod.quantite}</p>
-                <img src={`http://localhost:4000/${prod.img}`} alt={prod.img} className="Prodbdd-image" />
+                <img src={`http://192.168.1.420/${prod.img}`} alt={prod.img} className="Prodbdd-image" />
 
                 <button onClick={() => setSelectedProductId(prod.puid)}>Update product</button>
                 <button onClick={() => handleDelete(prod.puid)}>Delete</button>
