@@ -1,13 +1,12 @@
-.hero{
+.hero {
     height: 100vh;
-    background-image: url('../Assets//fond_accueil.png'); 
+    background-image: url('../Assets/fond_accueil.png'); /* Correction de l'URL de l'image de fond */
     background-size: cover;
     background-position: center; 
     display: flex;
 }
 
-
-.hero-left{
+.hero-left {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -17,20 +16,19 @@
     line-height: 1.1;
 }
 
-.hero-left h2{
+.hero-left h2 {
     color: #090909;
     font-size: 26px;
     font-weight: 600;
 }
 
-.hero-left p{
+.hero-left p {
     color: #ffffff;
     font-size: 100px;
-    text-shadow: 0.1em 0.1em 0.2em black
+    text-shadow: 0.1em 0.1em 0.2em black;
 }
 
-
-.hero-latest-btn{
+.hero-latest-btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,12 +38,29 @@
     border-radius: 75px;
     margin-top: 30px;
     background-color: #F38148;
-    color: white;
+
     font-size: 22px;
     font-weight: 500;
+  
+    outline: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.hero-right{
+.hero-latest-btn a {
+    display: flex; /* Ajout de cette ligne pour que les éléments à l'intérieur de <a> soient alignés horizontalement */
+    align-items: center; /* Alignement vertical des éléments à l'intérieur de <a> */
+    color: white;
+    text-decoration: none;
+}
+
+.hero-latest-btn img {
+    width: 20px;
+    height: auto;
+    margin-left: 13px; /* Ajout de marges à gauche pour séparer l'icône du texte */
+}
+
+.hero-right {
     flex: 1;
     display: flex;
     align-items: center;
@@ -53,6 +68,6 @@
 }
 
 .hero-right img {
-    width: 90%; /* Ajuste la largeur de l'image pour qu'elle remplisse son conteneur */
-    height: auto; /* Permet à la hauteur de s'ajuster automatiquement selon les proportions de l'image */
+    width: 90%;
+    height: auto;
 }

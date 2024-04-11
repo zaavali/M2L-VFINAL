@@ -1,9 +1,10 @@
 import React from 'react'
 import './Hero.css'
+import { Link } from 'react-router-dom';
+
 
 import arrow_icon from '../Assets/arrow.png'
-import hero_image from '../Assets/hero_image.png'
-import fond_accueil from '../Assets/fond_accueil.png'
+
 
 
 const Hero = () => {
@@ -18,10 +19,12 @@ const Hero = () => {
                 <p>sur le site de</p>
                 <p>La Maison des Ligues</p>
             </div>
-           <div className="hero-latest-btn">
-                <div>Voir nos produits</div>
-                <img src={arrow_icon} alt="" />
-           </div>
+            <div className="hero-latest-btn">
+    <Link to="/badminton">
+        <div>Voir nos produits</div>
+        <img src={arrow_icon} alt="" />
+    </Link>
+</div>
         </div>
 
         <div className="hero-right">
