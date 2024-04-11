@@ -9,7 +9,7 @@ const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:58195'],
+  origin: ['http://localhost:4000', 'http://localhost:3000', 'http://localhost:65375'],
   credentials: true,
 }));
 app.use('/uploads', express.static('uploads'));
