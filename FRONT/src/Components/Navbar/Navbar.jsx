@@ -12,7 +12,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://192.168.1.420/api/user/logout');
+      await axios.post('http://192.168.1.420:4000/api/user/logout');
       Cookies.remove('token');
       setIsLoggedIn(false);
       setIsAdmin(false);

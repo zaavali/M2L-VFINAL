@@ -15,7 +15,7 @@ export default function Admin() {
      
         }
       };
-      axios.get('http://192.168.1.420/api/user/user', config)
+      axios.get('http://192.168.1.420:4000/api/user/user', config)
         .then(response => {
           setUsers(response.data);
           setLoading(false);
@@ -34,7 +34,7 @@ export default function Admin() {
          
         }
       };
-      axios.delete(`http://192.168.1.420/api/user/user/${uuid}`, config)
+      axios.delete(`http://192.168.1.420:4000/api/user/user/${uuid}`, config)
         .then(() => {
           setUsers(users.filter(user => user.uuid !== uuid));
         })
