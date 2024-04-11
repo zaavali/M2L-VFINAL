@@ -16,7 +16,7 @@ export default function User() {
         e.preventDefault();
         console.log(formData);
         try {
-            await axios.post('http://localhost:4000/api/user/ins', formData);
+            await axios.post('http://192.168.1.420/api/user/ins', formData);
             console.log("Create request executed successfully!");
           
             setRegistrationMessage('Inscription réussie!');
