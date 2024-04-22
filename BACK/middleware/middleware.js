@@ -3,7 +3,7 @@ const Cookies = require('js-cookie');
 
 exports.authenticator = (req, res, next) => {
     try {
-        const token = req.cookies.token;
+        const token = req.headers.authorization;
 
         if (!token) {
             throw new Error('Accès refusé : Aucun jeton fourni.');

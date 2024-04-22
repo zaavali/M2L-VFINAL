@@ -5,9 +5,9 @@ const { authenticator } = require('../middleware/middleware');
 
 router.post('/ins', userController.postUser);
 router.post('/conn', userController.conn);
-router.delete('/user/:uuid', userController.deleteUser);
+router.delete('/user/:uuid',authenticator, userController.deleteUser);
 router.post('/logout', userController.handleLogout);
 
-router.get('/user', userController.getAllUser);
+router.get('/user',authenticator, userController.getAllUser);
 
 module.exports = router;

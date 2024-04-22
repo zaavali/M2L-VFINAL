@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 import logo from '../Assets/logo.png';
 import cart_icon from '../Assets/cart_icon.png';
@@ -6,24 +6,57 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+const api = axios.create({
+  baseURL: 'http://localhost:4000/api',
+  withCredentials: true,
+});
+
+api.interceptors.request.use(
+  (config) => {
+    const token = Cookies.get('token');
+    if (token) {
+      config.headers.Authorization = `${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
-  const [menu, setMenu] = useState(""); 
-  const navigate = useNavigate(); 
+  const [menu, setMenu] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      const storedToken = Cookies.get("token");
+      if (storedToken) {
+        try {
+          const response = await api.get('/auth/conn');
+          setIsLoggedIn(true);
+          setIsAdmin(response.data.isAdmin);
+        } catch (error) {
+          console.error(error);
+      
+          handleLogout();
+        }
+      }
+    };
+
+    checkLoggedIn();
+  }, []);
 
   const handleLogout = async () => {
     try {
-      await axios.post('http://192.168.1.42:4000/api/user/logout');
+      await api.post('/user/logout');
       Cookies.remove('token');
       setIsLoggedIn(false);
       setIsAdmin(false);
+      navigate('/');
     } catch (error) {
       console.error(error);
     }
-  };
-
-  // Fonction pour naviguer vers la page admin
-  const goToAdminPage = () => {
-    navigate('/admin');
   };
 
   return (
@@ -51,10 +84,10 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
             <Link to='/signup'><button>S'inscrire</button></Link>
           </>
         )}
-        
+
         {isLoggedIn && (
           <div>
-            {isAdmin && <button onClick={goToAdminPage} className="nav-button">Admin</button>}
+            {isAdmin && <button onClick={() => navigate('/admin')} className="nav-button">Admin</button>}
             <button onClick={handleLogout} className="nav-button">Se déconnecter</button>
           </div>
         )}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../Pages/CSS/produitsbdd.css'
-
+import Cookies from 'js-cookie';
 
 export default function Prodbdd() {
   const [formdata, setFormData] = useState({ nom: '', description: '', prix: '', quantite: '', img: null ,});
@@ -23,75 +23,102 @@ export default function Prodbdd() {
     setImage(file);
   };
 
-
-  const handleSubmit = async (e , puid) => {
+  const handleSubmit = async (e, puid) => {
     e.preventDefault();
     console.log(puid);
+  
     try {
-        
+      const storedToken = Cookies.get("token");
+      if (storedToken) {
+        const config = {
+          headers: {
+            Authorization: ` ${storedToken}` 
+          }
+        };
+  
         if (!puid) {
-            console.error('Le puid du produit n\'est pas défini.');
-            return;
+          console.error('Le puid du produit n\'est pas défini.');
+          return;
         }
-
-        await axios.put(`http://192.168.1.42:4000/api/prod/produit/${puid}`, formdata);
+  
+        await axios.put(`http://localhost:4000/api/prod/produit/${puid}`, formdata, config);
         console.log("Update request executed successfully!");
-        setSelectedProductId(null); 
+        setSelectedProductId(null);
+      }
     } catch (error) {
-        console.error(error);
+      console.error(error);
     }
-};
+  };
 
  
+const handleCreate = async (e) => {
+  e.preventDefault();
+  const formData = new FormData();
 
-  const handleCreate = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
+  formData.append('nom', formdata.nom);
+  formData.append('description', formdata.description);
+  formData.append('prix', formdata.prix);
+  formData.append('quantite', formdata.quantite);
+  formData.append('image', image);
 
-    formData.append('nom', formdata.nom);
-    formData.append('description', formdata.description);
-    formData.append('prix', formdata.prix);
-    formData.append('quantite', formdata.quantite);
-    formData.append('image', image);
+  for (let pair of formData.entries()) {
+    console.log(pair[0], pair[1]);
+  }
+  console.log(formData);
 
-   
-    for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
-console.log(formData)
-    try {
-      const response = await axios.post('http://192.168.1.42:4000/api/prod/produit', formData, {
+  try {
+    const storedToken = Cookies.get("token");
+    if (storedToken) {
+      const config = {
         headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+          Authorization: ` ${storedToken}` 
+        }
+      };
+      const response = await axios.post('http://localhost:4000/api/prod/produit', formData, config);
       console.log(response.data); 
       console.log("Create request executed successfully!");
-    } catch (error) {
-      console.error(error);
     }
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-  };
-
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(`http://192.168.1.42:4000/api/prod/produit/${id}`);
+const handleDelete = async (id) => {
+  try {
+    const storedToken = Cookies.get("token");
+    if (storedToken) {
+      const config = {
+        headers: {
+          Authorization: ` ${storedToken}` 
+        }
+      };
+      await axios.delete(`http://localhost:4000/api/prod/produit/${id}`, config);
       console.log("Delete request executed successfully!");
-    } catch (error) {
-      console.error(error);
     }
-  };
+  } catch (error) {
+    console.error(error);
+  }
+};
 
-  const recup = async () => {
-    try {
-      const response = await axios.get('http://192.168.1.42:4000/api/prod/produit');
+const recup = async () => {
+  try {
+    const storedToken = Cookies.get("token");
+    if (storedToken) {
+      const config = {
+        headers: {
+          Authorization: ` ${storedToken}` 
+        }
+      };
+      const response = await axios.get('http://localhost:4000/api/prod/produit', config);
       console.log(response);
       setUser(response.data);
       setAffichage(true);
-    } catch (error) {
-      console.error(error);
     }
-  };
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
 
 
@@ -115,7 +142,7 @@ console.log(formData)
                 <p> description: {prod.description}</p>
                 <p> prix: {prod.prix}</p>
                 <p> quantité: {prod.quantite}</p>
-                <img src={`http://192.168.1.42:4000/${prod.img}`} alt={prod.img} className="Prodbdd-image" />
+                <img src={`http://localhost:4000/${prod.img}`} alt={prod.img} className="Prodbdd-image" />
 
                 <button onClick={() => setSelectedProductId(prod.puid)}>Update product</button>
                 <button onClick={() => handleDelete(prod.puid)}>Delete</button>
@@ -201,4 +228,3 @@ console.log(formData)
     </div>
   )
 }
-

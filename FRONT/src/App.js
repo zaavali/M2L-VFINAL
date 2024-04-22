@@ -8,7 +8,7 @@ import Cart from './Pages/Cart';
 import LoginSignUp from './Pages/LoginSignUp';
 import Login from './Pages/Login';
 import Footer from './Components/Footer/Footer';
-import Admin from './Pages/admin';
+import Admin from './Pages/Admin';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

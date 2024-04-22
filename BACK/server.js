@@ -4,19 +4,20 @@ const userRoute = require('./routes/userroute');
 const prodRoute = require('./routes/prodroute');
 const commandeRoute = require('./routes/commandesroute');
 const cookieParser = require('cookie-parser');
+const authRoute =  require('./routes/authroute');
 
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
 app.use(cors({
-  origin: ['http://localhost:4000', 'http://localhost:3000', 'http://localhost:65375'],
+  origin: ['http://localhost:4000', 'http://localhost:3000', 'http://localhost:53443'],
   credentials: true,
 }));
 app.use('/uploads', express.static('uploads'));
 app.use('/api/user', userRoute);
 app.use('/api/prod', prodRoute);
 app.use('/api/commande', commandeRoute);
-
+app.use('/api/auth', authRoute);
 app.get('/api/cookie', (req, res) => {
   res.send(req.cookies.cookieName);
 });

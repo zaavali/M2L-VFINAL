@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './CSS/Login.css';
-import Admin from './admin'; 
+import Admin from './Admin'; 
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
@@ -15,12 +15,12 @@ export default function Connection({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAd
   const handleLog = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://192.168.1.42:4000/api/user/conn/', formdata);
+      const response = await axios.post('http://localhost:4000/api/user/conn/', formdata, { withCredentials: true });
       
       const token = response.data.token;
       const isAdmin = response.data.isAdmin;
 
-      Cookies.set('token', `${token}`, { expires: 2 / 24, secure: false});
+      Cookies.set('token', `${token}`, {path: '/', expires: 30, secure: true , sameSite: 'strict'});
       console.log('Token stocké dans le cookie :', Cookies.get('token'));
       setIsLoggedIn(true);
       setIsAdmin(isAdmin);

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { ShopContext } from '../Context/ShopContext';
 import Breadcrum from '../Components/Breadcrums/Breadcrum';
-import ProductDisplay from '../Components/ProductDisplay/ProductDisplay';
+import PageProduit from '../Components/PageProduit/PageProduit';
 
 
 const Product = () => {
@@ -19,7 +19,7 @@ const Product = () => {
   return (
     <div>
       <Breadcrum product={product} />
-      <ProductDisplay product={product} />
+      <PageProduit product={product} />
 
       <br /><br /><br />
     

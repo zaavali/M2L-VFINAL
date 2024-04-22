@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import './ProductDisplay.css'
+import './PageProduit.css'
 import { ShopContext } from '../../Context/ShopContext'
 
-const ProductDisplay = ({ product }) => {
+const PageProduit = ({ product }) => {
     const { addToCart } = useContext(ShopContext);
 
     // Directly use the provided product properties.
@@ -11,7 +11,7 @@ const ProductDisplay = ({ product }) => {
         <div className="productdisplay">
             <div className="productdisplay-left">
                 <div className="productdisplay-img-list">
-                    <img src={`http://192.168.1.42:4000/${product.img}`} alt={product.nom} className='productdisplay-main-img'/>
+                    <img src={`http://localhost:4000/${product.img}`} alt={product.nom} className='productdisplay-main-img'/>
 
                     {/* If you have more images, list them here */}
                 </div>
@@ -32,4 +32,4 @@ const ProductDisplay = ({ product }) => {
 };
 
 
-export default ProductDisplay;
+export default PageProduit;
