@@ -19,7 +19,21 @@ exports.getAllUser = async (req, res) => {
         }
     }
 };
-
+exports.getuuidUser = async (req, res) => {
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        const rows = await conn.query('SELECT uuid FROM user');
+        res.status(200).json(rows);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    } finally {
+        if (conn) {
+            conn.release();
+        }
+    }
+}
 exports.postUser = async (req, res) => {
     try {
         let conn;
@@ -80,7 +94,7 @@ exports.conn = async (req, res) => {
 
                 const token = jwt.sign(tokenPayload, process.env.API_KEY, { expiresIn: '2h' });
 
-                res.cookie('token', token, { expires: expirationDate, secure: false});
+                res.cookie('token', token, { expires: expirationDate, secure: true});
 
                 res.status(200).json({ token, isAdmin: user.admin === 1 });
             } else {

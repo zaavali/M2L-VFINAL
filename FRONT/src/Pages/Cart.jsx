@@ -6,14 +6,16 @@ import './CSS/Cart.css';
 import remove_icon from '../Components/Assets/cart_cross_icon.png';
 import { Link } from 'react-router-dom';
 
-
-
-
 const Cart = () => {
   const { produits, cartItems, removeFromCart } = useContext(ShopContext);
   const [userUuid, setUserUuid] = useState('');
 
- 
+  useEffect(() => {
+    const uuidFromCookie = Cookies.get('userUuid');
+    if (uuidFromCookie) {
+      setUserUuid(uuidFromCookie);
+    }
+  }, []);
 
   const getProduitsDansPanier = () => {
     const produitsDansPanier = [];
@@ -41,10 +43,11 @@ const Cart = () => {
 
   const envoyerCommandeBackend = async (commande) => {
     try {
-      const token = Cookies.get('token');
-      const response = await axios.post('http://localhost:4000/api/commande/valider', commande, {
+      const token = Cookies.get('token');  // Récupérer le token du cookie
+      console.log('Token:', token);  // Pour vérifier que le token est bien récupéré
+      await axios.post('http://localhost:4000/api/commande/valider', commande, {
         headers: {
-          Authorization: `Bearer ${token}`
+          'Authorization': `Bearer ${token}`
         }
       });
       console.log("Commande envoyée au Backend !");
@@ -52,7 +55,6 @@ const Cart = () => {
       console.error("Erreur lors de l'envoi de la commande au backend :", error);
     }
   };
-  
 
   const validerCommande = () => {
     const produitsDansPanier = getProduitsDansPanier();
@@ -101,31 +103,28 @@ const Cart = () => {
           </div>
           <hr />
           {produitsDansPanier.map((produit) => (
-  <div key={produit.puid}>
-    <div className="cartitems-format cartitems-format-main">
-      <p>
-        <Link to={`/product/${produit.puid}`} className="link-unstyled">
-          <img className="product-image" src={`http://localhost:4000/${produit.img}`} alt={produit.nom} />
-        </Link>
-      </p>
-      <p>
-        <Link to={`/product/${produit.puid}`} className="link-unstyled">{produit.nom}</Link>
-      </p>
-      <p>{produit.prix} €</p>
-      <p className="cartitems-quantity">{produit.quantite}</p>
-      <p>{produit.quantite * produit.prix} €</p>
-      <img className='cartitems-remove-icon' src={remove_icon} onClick={() => handleDelete(produit.puid)} alt="Supprimer" />
-    </div>
-    <hr />
-  </div>
-))}
-
+            <div key={produit.puid}>
+              <div className="cartitems-format cartitems-format-main">
+                <p>
+                  <Link to={`/product/${produit.puid}`} className="link-unstyled">
+                    <img className="product-image" src={`http://localhost:4000/${produit.img}`} alt={produit.nom} />
+                  </Link>
+                </p>
+                <p>
+                  <Link to={`/product/${produit.puid}`} className="link-unstyled">{produit.nom}</Link>
+                </p>
+                <p>{produit.prix} €</p>
+                <p className="cartitems-quantity">{produit.quantite}</p>
+                <p>{produit.quantite * produit.prix} €</p>
+                <img className='cartitems-remove-icon' src={remove_icon} onClick={() => handleDelete(produit.puid)} alt="Supprimer" />
+              </div>
+              <hr />
+            </div>
+          ))}
 
           <div className="cartitems-down">
             <div className="cartitems-total">
-                
-                  <p className='total'>Total : {calculerTotal()} €</p>
-               
+              <p className='total'>Total : {calculerTotal()} €</p>
               <button onClick={validerCommande}>Commander</button>
             </div>
           </div>
@@ -138,13 +137,12 @@ const Cart = () => {
     <div>
       <div className="cartitems-down">
         <div className="cartitems-total">
-            <h1 className="titre-mon-panier">Mon panier</h1>
+          <h1 className="titre-mon-panier">Mon panier</h1>
         </div>
       </div>
       {afficherProduitsDansPanier()}
     </div>
   );
-  
 };
 
 export default Cart;

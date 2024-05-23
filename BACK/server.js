@@ -9,10 +9,18 @@ const authRoute =  require('./routes/authroute');
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
-app.use(cors({
-  origin: ['http://localhost:4000', 'http://localhost:3000', 'http://localhost:53443'],
-  credentials: true,
-}));
+const corsOptions = {
+  origin: (origin, callback) => {
+   
+    if (!origin || /^http:\/\/localhost:\d+$/.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true 
+};
+app.use(cors(corsOptions));
 app.use('/uploads', express.static('uploads'));
 app.use('/api/user', userRoute);
 app.use('/api/prod', prodRoute);
