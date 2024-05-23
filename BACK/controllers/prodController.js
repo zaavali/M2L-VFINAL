@@ -66,10 +66,11 @@ exports.postProd =   async (req, res) => {
 };
 
 exports.putProdbypuid = async (req, res) => {
-    const {   description, prix, quantite } = req.body;
-    const { puid } = req.params
-    console.log(  description, prix, quantite);
+    const { nom, description, prix, quantite  } = req.body;
+    console.log(req.body)
+    const { puid } = req.params;
 
+   
     const prixAsNumber = parseFloat(prix);
     if (isNaN(prixAsNumber)) {
         return res.status(400).json({ error: 'Le prix doit être un nombre valide.' });
@@ -79,12 +80,45 @@ exports.putProdbypuid = async (req, res) => {
     try {
         conn = await pool.getConnection();
 
-        const rows = await conn.query("UPDATE produit SET  description=?, prix=?, quantite=? WHERE puid=?", [ description, prixAsNumber, quantite, puid]);
+        let updateFields = '';
+        const params = [];
+
+       
+        if (nom) {
+            updateFields += 'nom=?, ';
+            params.push(nom);
+        }
+        if (description) {
+            updateFields += 'description=?, ';
+            params.push(description);
+        }
+        if (prix) {
+            updateFields += 'prix=?, ';
+            params.push(prixAsNumber);
+        }
+        if (quantite) {
+            updateFields += 'quantite=?, ';
+            params.push(quantite);
+        }
+        if (req.file) {
+        
+            updateFields += 'img=?, ';
+            params.push(req.file.path);
+            console.log(req.file.path);
+        }
+
+      
+        updateFields = updateFields.slice(0, -2);
+
+      
+        const query = `UPDATE produit SET ${updateFields} WHERE puid=?`;
+        params.push(puid);
+        const rows = await conn.query(query, params);
 
         res.status(200).json(rows.affectedRows);
     } catch (err) {
         console.log(err);
-        res.status(500).json({ error: 'error while updating product.' });
+        res.status(500).json({ error: 'Erreur lors de la mise à jour du produit.' });
     } finally {
         if (conn) conn.release();
     }

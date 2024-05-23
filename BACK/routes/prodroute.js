@@ -7,7 +7,7 @@ router.use('/uploads', express.static('uploads'))
 
 router.get('/produit', prodController.getAllProduits);
 router.post('/produit', upload.single('image'), prodController.postProd);
-router.put('/produit/:puid', prodController.putProdbypuid);
+router.put('/produit/:puid',  upload.single('image'), prodController.putProdbypuid);
 router.delete('/produit/:puid', prodController.deleteProd);
 router.put('/produit/:puid/decrement', prodController.decrementQuantity);
 router.put('/produit/:puid/increment', prodController.incrementQuantity);

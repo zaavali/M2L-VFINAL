@@ -21,11 +21,24 @@ export default function Prodbdd() {
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
     setImage(file);
+    
   };
-
+  
   const handleSubmit = async (e, puid) => {
     e.preventDefault();
-    console.log(puid);
+    console.log(image)
+    const formData = new FormData();
+  
+    formData.append('nom', formdata.nom);
+    formData.append('description', formdata.description);
+    formData.append('prix', formdata.prix);
+    formData.append('quantite', formdata.quantite);
+    formData.append('image', image);
+  
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+    console.log(formData);
   
     try {
       const storedToken = Cookies.get("token");
@@ -35,24 +48,21 @@ export default function Prodbdd() {
             Authorization: ` ${storedToken}` 
           }
         };
-  
-        if (!puid) {
-          console.error('Le puid du produit n\'est pas défini.');
-          return;
-        }
-  
-        await axios.put(`http://localhost:4000/api/prod/produit/${puid}`, formdata, config);
-        console.log("Update request executed successfully!");
-        setSelectedProductId(null);
+        const response = await axios.put(`http://localhost:4000/api/prod/produit/${puid}`, formData, config);
+        console.log(response.data); 
+        console.log("update request executed successfully!");
       }
     } catch (error) {
       console.error(error);
     }
   };
+ 
+  
 
  
 const handleCreate = async (e) => {
   e.preventDefault();
+  console.log(image)
   const formData = new FormData();
 
   formData.append('nom', formdata.nom);
