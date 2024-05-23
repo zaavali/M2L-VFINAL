@@ -16,12 +16,11 @@ exports.valider = async (req, res) => {
         console.log('UUID de l\'utilisateur:', uuid); 
         const idCommande = crypto.randomUUID();
         const montantTotal = calculerMontantTotal(req.body.produits); 
-        const nomCommande = req.body.nom;
         const produits = req.body.produits;
 
         const conn = await pool.getConnection();
-        const request = 'INSERT INTO commandes (cuid, montant, puiduser, nom, produits) VALUES (?, ?, ?, ?, ?)';
-        await conn.query(request, [idCommande, montantTotal, uuid, nomCommande, JSON.stringify(produits)]);
+        const request = 'INSERT INTO commandes (cuid, montant, puiduser, produits) VALUES (?, ?, ?, ?)';
+        await conn.query(request, [idCommande, montantTotal, uuid, JSON.stringify(produits)]);
         conn.release();
 
         res.status(200).json({ message: 'Commande validée !', idCommande });
