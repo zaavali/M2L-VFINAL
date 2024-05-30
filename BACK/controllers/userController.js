@@ -94,7 +94,7 @@ exports.conn = async (req, res) => {
 
                 const token = jwt.sign(tokenPayload, process.env.API_KEY, { expiresIn: '2h' });
 
-                res.cookie('token', token, { expires: expirationDate, secure: true});
+                res.cookie('token', token, { expires: expirationDate});
 
                 res.status(200).json({ token, isAdmin: user.admin === 1 });
             } else {

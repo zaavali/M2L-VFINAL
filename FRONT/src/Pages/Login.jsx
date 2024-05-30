@@ -20,7 +20,7 @@ export default function Connection({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAd
       const token = response.data.token;
       const isAdmin = response.data.isAdmin;
 
-      Cookies.set('token', `${token}`, {path: '/', expires: 30, secure: true , sameSite: 'strict'});
+      Cookies.set('token', `${token}`, {path: '/', expires: 30});
       console.log('Token stocké dans le cookie :', Cookies.get('token'));
       setIsLoggedIn(true);
       setIsAdmin(isAdmin);
