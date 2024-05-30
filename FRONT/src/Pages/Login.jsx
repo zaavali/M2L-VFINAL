@@ -15,7 +15,7 @@ export default function Connection({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAd
   const handleLog = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://192.168.1.25:4000/api/user/conn/', formdata, { withCredentials: true });
+      const response = await axios.post('http://localhost:4000/api/user/conn/', formdata, { withCredentials: true });
       
       const token = response.data.token;
       const isAdmin = response.data.isAdmin;

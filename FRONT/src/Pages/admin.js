@@ -19,7 +19,7 @@ export default function Admin() {
               Authorization: ` ${storedToken}` 
             }
           };
-          const response = await axios.get('http://192.168.1.25:4000/api/user/user', config);
+          const response = await axios.get('http://localhost:4000/api/user/user', config);
           setUsers(response.data);
           setLoading(false);
         }
@@ -40,7 +40,7 @@ export default function Admin() {
             Authorization: ` ${storedToken}` 
           }
         };
-        await axios.delete(`http://192.168.1.25:4000/api/user/user/${uuid}`, config);
+        await axios.delete(`http://localhost:4000/api/user/user/${uuid}`, config);
         setUsers(users.filter(user => user.uuid !== uuid));
       }
     } catch (error) {

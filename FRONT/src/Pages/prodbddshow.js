@@ -10,7 +10,7 @@ export default function Prodbddshow() {
   useEffect(() => {
     const recup = async () => {
       try {
-        const response = await axios.get('http://192.168.1.25:4000/api/prod/produit');
+        const response = await axios.get('http://localhost:4000/api/prod/produit');
         setProduits(response.data);
         setAffichage(true);
       } catch (error) {
@@ -28,7 +28,7 @@ export default function Prodbddshow() {
           produits.map((prod, i) => (
             <div key={i} className="item">
               <Link to={`/product/${prod.puid}`}>
-                <img src={`http://192.168.1.25:4000/${prod.img}`} alt={prod.img} className="adjustedimg" onClick={() => window.scrollTo(0, 0)} />
+                <img src={`http://localhost:4000/${prod.img}`} alt={prod.img} className="adjustedimg" onClick={() => window.scrollTo(0, 0)} />
               </Link>
               <p>{prod.nom}</p> <p className="item-price">{prod.prix} €</p>
 

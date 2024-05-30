@@ -34,7 +34,7 @@ const Cart = () => {
   const handleDelete = async (puid) => {
     try {
       removeFromCart(puid);
-      await axios.put(`http://192.168.1.25:4000/api/prod/produit/${puid}/increment`);
+      await axios.put(`http://localhost:4000/api/prod/produit/${puid}/increment`);
       console.log("Item removed from cart successfully!");
     } catch (error) {
       console.error(error);
@@ -45,7 +45,7 @@ const Cart = () => {
     try {
       const token = Cookies.get('token');  // Récupérer le token du cookie
       console.log('Token:', token);  // Pour vérifier que le token est bien récupéré
-      await axios.post('http://192.168.1.25:4000/api/commande/valider', commande, {
+      await axios.post('http://localhost:4000/api/commande/valider', commande, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -107,7 +107,7 @@ const Cart = () => {
               <div className="cartitems-format cartitems-format-main">
                 <p>
                   <Link to={`/product/${produit.puid}`} className="link-unstyled">
-                    <img className="product-image" src={`http://192.168.1.25:4000/${produit.img}`} alt={produit.nom} />
+                    <img className="product-image" src={`http://localhost:4000/${produit.img}`} alt={produit.nom} />
                   </Link>
                 </p>
                 <p>
