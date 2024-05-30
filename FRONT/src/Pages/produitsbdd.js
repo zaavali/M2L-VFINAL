@@ -48,7 +48,7 @@ export default function Prodbdd() {
             Authorization: ` ${storedToken}` 
           }
         };
-        const response = await axios.put(`http://localhost:4000/api/prod/produit/${puid}`, formData, config);
+        const response = await axios.put(`http://192.168.1.25:4000/api/prod/produit/${puid}`, formData, config);
         console.log(response.data); 
         console.log("update request executed successfully!");
       }
@@ -84,7 +84,7 @@ const handleCreate = async (e) => {
           Authorization: ` ${storedToken}` 
         }
       };
-      const response = await axios.post('http://localhost:4000/api/prod/produit', formData, config);
+      const response = await axios.post('http://192.168.1.25:4000/api/prod/produit', formData, config);
       console.log(response.data); 
       console.log("Create request executed successfully!");
     }
@@ -102,7 +102,7 @@ const handleDelete = async (id) => {
           Authorization: ` ${storedToken}` 
         }
       };
-      await axios.delete(`http://localhost:4000/api/prod/produit/${id}`, config);
+      await axios.delete(`http://192.168.1.25:4000/api/prod/produit/${id}`, config);
       console.log("Delete request executed successfully!");
     }
   } catch (error) {
@@ -119,7 +119,7 @@ const recup = async () => {
           Authorization: ` ${storedToken}` 
         }
       };
-      const response = await axios.get('http://localhost:4000/api/prod/produit', config);
+      const response = await axios.get('http://192.168.1.25:4000/api/prod/produit', config);
       console.log(response);
       setUser(response.data);
       setAffichage(true);
@@ -152,7 +152,7 @@ const recup = async () => {
                 <p> description: {prod.description}</p>
                 <p> prix: {prod.prix}</p>
                 <p> quantité: {prod.quantite}</p>
-                <img src={`http://localhost:4000/${prod.img}`} alt={prod.img} className="Prodbdd-image" />
+                <img src={`http://192.168.1.25:4000/${prod.img}`} alt={prod.img} className="Prodbdd-image" />
 
                 <button onClick={() => setSelectedProductId(prod.puid)}>Update product</button>
                 <button onClick={() => handleDelete(prod.puid)}>Delete</button>

@@ -17,7 +17,7 @@
 //         e.preventDefault()
 //         console.log(formdata)
 //         try {
-//             await axios.post('http://localhost:4000/api/user/user', formdata);
+//             await axios.post('http://192.168.1.25:4000/api/user/user', formdata);
 //             console.log("Create request executed successfully!");
 //         } catch (error) {
 //             console.error(error);
@@ -26,7 +26,7 @@
 
   
 //     const recup = async () => {
-//         await axios.get('http://localhost:4000/api/user/user').then((res) => {
+//         await axios.get('http://192.168.1.25:4000/api/user/user').then((res) => {
 //             console.log(res)
 //             setUser(res.data)
 //             setAffichage(true)
