@@ -9,18 +9,18 @@ const authRoute =  require('./routes/authroute');
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
-const corsOptions = {
-  origin: (origin, callback) => {
+// const corsOptions = {
+//   origin: (origin, callback) => {
    
-    if (!origin || /^http:\/\/localhost:\d+$/.test(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true 
-};
-app.use(cors(corsOptions));
+//     if (!origin || /^http:\/\/localhost:\d+$/.test(origin)) {
+//       callback(null, true);
+//     } else {
+//       callback(new Error('Not allowed by CORS'));
+//     }
+//   },
+//   credentials: true 
+// };
+app.use(cors());
 app.use('/uploads', express.static('uploads'));
 app.use('/api/user', userRoute);
 app.use('/api/prod', prodRoute);
