@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 import logo from '../Assets/logo.png';
 import cart_icon from '../Assets/cart_icon.png';
@@ -28,7 +28,26 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
   const [menu, setMenu] = useState("");
   const navigate = useNavigate();
 
-  const handleLogout = useCallback(async () => {
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      const storedToken = Cookies.get("token");
+      if (storedToken) {
+        try {
+          const response = await api.get('/auth/conn');
+          setIsLoggedIn(true);
+          setIsAdmin(response.data.isAdmin);
+        } catch (error) {
+          console.error(error);
+      
+          handleLogout();
+        }
+      }
+    };
+
+    checkLoggedIn();
+  }, []);
+
+  const handleLogout = async () => {
     try {
       await api.post('/user/logout');
       Cookies.remove('token');
@@ -38,26 +57,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
     } catch (error) {
       console.error(error);
     }
-  }, [navigate, setIsLoggedIn, setIsAdmin]);
-
-  useEffect(() => {
-    const checkLoggedIn = async () => {
-      const storedToken = Cookies.get("token");
-      
-      if (storedToken) {
-        try {
-          const response = await api.get('/auth/conn');
-          setIsLoggedIn(true);
-          setIsAdmin(response.data.isAdmin);
-        } catch (error) {
-          console.error(error);
-          handleLogout();
-        }
-      }
-    };
-
-    checkLoggedIn();
-  }, [handleLogout, setIsLoggedIn, setIsAdmin]);
+  };
 
   return (
     <div className='navbar'>
