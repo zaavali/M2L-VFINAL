@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 import Prodbdd from './produitsbdd';
-import './CSS/Admin.css'; // Importez le fichier CSS ici
+import './CSS/Admin.css'; 
 import delete_icon from '../Components/Assets/cart_cross_icon.png';
 
 export default function Admin() {
