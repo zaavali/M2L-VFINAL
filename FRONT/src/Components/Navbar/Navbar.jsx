@@ -43,6 +43,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
   useEffect(() => {
     const checkLoggedIn = async () => {
       const storedToken = Cookies.get("token");
+      
       if (storedToken) {
         try {
           const response = await api.get('/auth/conn');
