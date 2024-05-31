@@ -46,8 +46,10 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
       if (storedToken) {
         try {
           const response = await api.get('/auth/conn');
+          console.log('User is logged in');
           setIsLoggedIn(true);
           setIsAdmin(response.data.isAdmin);
+          console.log('Admin status:', response.data.isAdmin);
         } catch (error) {
           console.error(error);
           handleLogout();
@@ -57,6 +59,10 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
 
     checkLoggedIn();
   }, [handleLogout, setIsLoggedIn, setIsAdmin]);
+
+  console.log('Rendering Navbar');
+  console.log('isLoggedIn:', isLoggedIn);
+  console.log('isAdmin:', isAdmin);
 
   return (
     <div className='navbar'>
