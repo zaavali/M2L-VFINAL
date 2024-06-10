@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Navbar.css';
 import logo from '../Assets/logo.png';
 import cart_icon from '../Assets/cart_icon.png';
@@ -28,7 +28,26 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
   const [menu, setMenu] = useState("");
   const navigate = useNavigate();
 
-  const handleLogout = useCallback(async () => {
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      const storedToken = Cookies.get("token");
+      if (storedToken) {
+        try {
+          const response = await api.get('/auth/conn');
+          setIsLoggedIn(true);
+          setIsAdmin(response.data.isAdmin);
+        } catch (error) {
+          console.error(error);
+      
+          handleLogout();
+        }
+      }
+    };
+
+    checkLoggedIn();
+  }, []);
+
+  const handleLogout = async () => {
     try {
       await api.post('/user/logout');
       Cookies.remove('token');
@@ -38,65 +57,44 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
     } catch (error) {
       console.error(error);
     }
-  }, [navigate, setIsLoggedIn, setIsAdmin]);
-
-  useEffect(() => {
-    const checkLoggedIn = async () => {
-      const storedToken = Cookies.get("token");
-      if (storedToken) {
-        try {
-          const response = await api.get('/auth/conn');
-          setIsLoggedIn(true);
-          setIsAdmin(response.data.isAdmin);
-          console.log('Admin status:', response.data.isAdmin);
-        } catch (error) {
-          console.error(error);
-          handleLogout();
-        }
-      } else {
-        setIsAdmin(false);
-      }
-    };
-
-    checkLoggedIn();
-  }, [handleLogout, setIsLoggedIn, setIsAdmin]);
-
-
+  };
 
   return (
     <div className='navbar'>
       <Link to='/'>
         <div className="nav-logo">
-          <img src={logo} alt="Logo" />
+          <img src={logo} alt="" />
           <p>MAISON DES LIGUES</p>
         </div>
       </Link>
       <ul className="nav-menu">
         <li onClick={() => { setMenu("accueil") }}>
           <Link style={{ textDecoration: 'none' }} to='/'>Accueil</Link>
-          {menu === "accueil" && <hr />}
+          {menu === "accueil" ? <hr /> : <></>}
         </li>
         <li onClick={() => { setMenu("badminton") }}>
           <Link style={{ textDecoration: 'none' }} to='badminton'>Nos produits</Link>
-          {menu === "badminton" && <hr />}
+          {menu === "badminton" ? <hr /> : <></>}
         </li>
       </ul>
       <div className="nav-login-cart">
-        {!isLoggedIn ? (
+        {!isLoggedIn && (
           <>
             <Link to='/login'><button>Se connecter</button></Link>
             <Link to='/signup'><button>S'inscrire</button></Link>
           </>
-        ) : (
+        )}
+
+        {isLoggedIn && (
           <div>
             {isAdmin && <button onClick={() => navigate('/admin')} className="nav-button">Admin</button>}
             <button onClick={handleLogout} className="nav-button">Se déconnecter</button>
           </div>
         )}
-        <Link to='/cart'><img src={cart_icon} alt="Cart Icon" /></Link>
+        <Link to='/cart'><img src={cart_icon} alt="" /></Link>
       </div>
     </div>
   );
-};
+}
 
 export default Navbar;
