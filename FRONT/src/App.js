@@ -23,14 +23,14 @@ function App() {
       <Router>
         <Navbar isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin} />
         <Routes>
-          <Route path="/" element={<Shop isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
-          <Route path="/badminton" element={<Prodbddshow isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
-          <Route path="/product" element={<Product isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>}>
-            <Route path=":productId" element={<Product isConnected={isLoggedIn} setIsConnected={setIsConnected} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
+          <Route path="/" element={<Shop isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
+          <Route path="/badminton" element={<Prodbddshow isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
+          <Route path="/product" element={<Product isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>}>
+            <Route path=":productId" element={<Product isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
           </Route>
-          <Route path="/cart" element={<Cart isConnected={isLoggedIn} setIsConnected={setIsConnected} isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />
-          <Route path="/signup" element={<LoginSignUp isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />
-          <Route path="/login" element={<Login isConnected={isLoggedIn} setIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />
+          <Route path="/cart" element={<Cart isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />
+          <Route path="/signup" element={<LoginSignUp isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />
+          <Route path="/login" element={<Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />
           <Route path="/admin" element={isAdmin ? <Admin /> : <Navigate to="/" />} />
         </Routes>
         <Footer />
