@@ -61,9 +61,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
     checkLoggedIn();
   }, [handleLogout, setIsLoggedIn, setIsAdmin]);
 
-  console.log('Rendering Navbar');
-  console.log('isLoggedIn:', isLoggedIn);
-  console.log('isAdmin:', isAdmin);
+
 
   return (
     <div className='navbar'>
