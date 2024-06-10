@@ -47,7 +47,7 @@ const Cart = () => {
       console.log('Token:', token);  
       await axios.post('http://192.168.1.25:4000/api/commande/valider', commande, {
         headers: {
-          'Authorization': `Bearer ${token}`
+          'Authorization': `${token}`
         }
       });
       console.log("Commande envoyée au Backend !");
