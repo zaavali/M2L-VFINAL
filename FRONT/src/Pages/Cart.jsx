@@ -43,8 +43,8 @@ const Cart = () => {
 
   const envoyerCommandeBackend = async (commande) => {
     try {
-      const token = Cookies.get('token');  // Récupérer le token du cookie
-      console.log('Token:', token);  // Pour vérifier que le token est bien récupéré
+      const token = Cookies.get('token');  
+      console.log('Token:', token);  
       await axios.post('http://192.168.1.25:4000/api/commande/valider', commande, {
         headers: {
           'Authorization': `Bearer ${token}`
