@@ -46,7 +46,6 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
       if (storedToken) {
         try {
           const response = await api.get('/auth/conn');
-          console.log('User is logged in');
           setIsLoggedIn(true);
           setIsAdmin(response.data.isAdmin);
           console.log('Admin status:', response.data.isAdmin);
@@ -54,6 +53,8 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
           console.error(error);
           handleLogout();
         }
+      } else {
+        setIsAdmin(false);
       }
     };
 
@@ -68,38 +69,36 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
     <div className='navbar'>
       <Link to='/'>
         <div className="nav-logo">
-          <img src={logo} alt="" />
+          <img src={logo} alt="Logo" />
           <p>MAISON DES LIGUES</p>
         </div>
       </Link>
       <ul className="nav-menu">
         <li onClick={() => { setMenu("accueil") }}>
           <Link style={{ textDecoration: 'none' }} to='/'>Accueil</Link>
-          {menu === "accueil" ? <hr /> : <></>}
+          {menu === "accueil" && <hr />}
         </li>
         <li onClick={() => { setMenu("badminton") }}>
           <Link style={{ textDecoration: 'none' }} to='badminton'>Nos produits</Link>
-          {menu === "badminton" ? <hr /> : <></>}
+          {menu === "badminton" && <hr />}
         </li>
       </ul>
       <div className="nav-login-cart">
-        {!isLoggedIn && (
+        {!isLoggedIn ? (
           <>
             <Link to='/login'><button>Se connecter</button></Link>
             <Link to='/signup'><button>S'inscrire</button></Link>
           </>
-        )}
-
-        {isLoggedIn && (
+        ) : (
           <div>
             {isAdmin && <button onClick={() => navigate('/admin')} className="nav-button">Admin</button>}
             <button onClick={handleLogout} className="nav-button">Se déconnecter</button>
           </div>
         )}
-        <Link to='/cart'><img src={cart_icon} alt="" /></Link>
+        <Link to='/cart'><img src={cart_icon} alt="Cart Icon" /></Link>
       </div>
     </div>
   );
-}
+};
 
 export default Navbar;
