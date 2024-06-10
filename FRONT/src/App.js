@@ -15,7 +15,7 @@ function App() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    
+    // Votre logique ici
   }, []);
 
   return (
@@ -25,12 +25,10 @@ function App() {
         <Routes>
           <Route path="/" element={<Shop isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
           <Route path="/badminton" element={<Prodbddshow isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
-          {/* <Route path="/basket" element={<Prodbddshow isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
-          <Route path="/tennis" element={<Prodbddshow isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} /> */}
           <Route path="/product" element={<Product isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>}>
-            <Route path=":productId" element={<Product isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
+            <Route path=":productId" element={<Product isConnected={isLoggedIn} setIsConnected={setIsConnected} isAdmin={isAdmin} setIsAdmin={setIsAdmin}/>} />
           </Route>
-          <Route path="/cart" element={<Cart isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />
+          <Route path="/cart" element={<Cart isConnected={isLoggedIn} setIsConnected={setIsConnected} isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />
           <Route path="/signup" element={<LoginSignUp isConnected={isLoggedIn} setIsConnected={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />
           <Route path="/login" element={<Login isConnected={isLoggedIn} setIsLoggedIn={setIsLoggedIn} isAdmin={isAdmin} setIsAdmin={setIsAdmin} />} />
           <Route path="/admin" element={isAdmin ? <Admin /> : <Navigate to="/" />} />
@@ -42,5 +40,3 @@ function App() {
 }
 
 export default App;
-
-

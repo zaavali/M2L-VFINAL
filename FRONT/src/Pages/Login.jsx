@@ -5,8 +5,6 @@ import Admin from './admin';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
-
-
 export default function Connection({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) {
   const [formdata, setFormData] = useState({ email: '', mdp: '' });
   const [loginMessage, setLoginMessage] = useState('');
