@@ -50,9 +50,9 @@ const Cart = () => {
           'Authorization': `${token}`
         }
       });
-      console.log("Commande envoyée au Backend !");
+      console.log("Commande envoyée en base de données !");
     } catch (error) {
-      console.error("Erreur lors de l'envoi de la commande au backend :", error);
+      console.error("Erreur lors de l'envoi de la commande à la base de données :", error);
     }
   };
 
