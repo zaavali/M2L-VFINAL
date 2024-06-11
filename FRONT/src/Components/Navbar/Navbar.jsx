@@ -36,21 +36,26 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
           const response = await api.get('/auth/conn');
           setIsLoggedIn(true);
           setIsAdmin(response.data.isAdmin);
+          Cookies.set("isAdmin", response.data.isAdmin);  
         } catch (error) {
           console.error(error);
-      
           handleLogout();
         }
+      } else {
+        // If no token, use the value from cookies
+        const storedIsAdmin = Cookies.get("isAdmin") === 'true';
+        setIsAdmin(storedIsAdmin);
       }
     };
 
     checkLoggedIn();
-  }, []);
+  }, [setIsLoggedIn, setIsAdmin]);
 
   const handleLogout = async () => {
     try {
       await api.post('/user/logout');
       Cookies.remove('token');
+      Cookies.remove('isAdmin');  
       setIsLoggedIn(false);
       setIsAdmin(false);
       navigate('/');
@@ -73,7 +78,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
           {menu === "accueil" ? <hr /> : <></>}
         </li>
         <li onClick={() => { setMenu("badminton") }}>
-          <Link style={{ textDecoration: 'none' }} to='badminton'>Nos produits</Link>
+          <Link style={{ textDecoration: 'none' }} to='/badminton'>Nos produits</Link>
           {menu === "badminton" ? <hr /> : <></>}
         </li>
       </ul>
