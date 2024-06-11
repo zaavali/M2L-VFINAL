@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import './CSS/Login.css';
-import Admin from './Admin';
+import Admin from './admin';
 import { Link, useNavigate } from 'react-router-dom';
 import Cookies from 'js-cookie';
 
