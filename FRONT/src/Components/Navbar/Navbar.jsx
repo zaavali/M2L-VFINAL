@@ -5,7 +5,6 @@ import cart_icon from '../Assets/cart_icon.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import jwtDecode from 'jwt-decode';
 
 const api = axios.create({
   baseURL: 'http://192.168.1.25:4000/api',
@@ -32,27 +31,19 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
   useEffect(() => {
     const checkLoggedIn = async () => {
       const storedToken = Cookies.get("token");
-      console.log("Stored token:", storedToken);
-
       if (storedToken) {
         try {
-          const decodedToken = jwtDecode(storedToken);
-          console.log("Decoded token:", decodedToken);
-
-          const { isAdmin } = decodedToken;
-          console.log("isAdmin from token:", isAdmin);
-
+          const response = await api.get('/auth/conn');
           setIsLoggedIn(true);
-          setIsAdmin(isAdmin);
-          Cookies.set("isAdmin", isAdmin);  // Save isAdmin to cookies
+          setIsAdmin(response.data.isAdmin);
+          Cookies.set("isAdmin", response.data.isAdmin);  
         } catch (error) {
-          console.error('Error decoding token:', error);
+          console.error(error);
           handleLogout();
         }
       } else {
         // If no token, use the value from cookies
         const storedIsAdmin = Cookies.get("isAdmin") === 'true';
-        console.log("isAdmin from cookies:", storedIsAdmin);
         setIsAdmin(storedIsAdmin);
       }
     };
@@ -64,12 +55,12 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
     try {
       await api.post('/user/logout');
       Cookies.remove('token');
-      Cookies.remove('isAdmin');  // Remove isAdmin from cookies
+      Cookies.remove('isAdmin');  
       setIsLoggedIn(false);
       setIsAdmin(false);
       navigate('/');
     } catch (error) {
-      console.error('Error during logout:', error);
+      console.error(error);
     }
   };
 
