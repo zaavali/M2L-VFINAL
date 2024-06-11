@@ -5,7 +5,6 @@ import cart_icon from '../Assets/cart_icon.png';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import jwtDecode from 'jwt-decode';
 
 const api = axios.create({
   baseURL: 'http://192.168.1.25:4000/api',
@@ -31,30 +30,22 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
 
   useEffect(() => {
     const checkLoggedIn = async () => {
-        const storedToken = Cookies.get("token");
-        console.log("Stored token:", storedToken);
-
-        if (storedToken) {
-            try {
-                const decodedToken = jwtDecode(storedToken);
-                console.log("Decoded token:", decodedToken);
-
-                const { uuid, isAdmin } = decodedToken;
-                console.log("UUID from token:", uuid);
-                console.log("isAdmin from token:", isAdmin);
-
-                setIsLoggedIn(true);
-                setIsAdmin(isAdmin);
-                setUserUuid(uuid);
-            } catch (error) {
-                console.error('Error decoding token:', error);
-                handleLogout();
-            }
+      const storedToken = Cookies.get("token");
+      if (storedToken) {
+        try {
+          const response = await api.get('/auth/conn');
+          setIsLoggedIn(true);
+          setIsAdmin(response.data.isAdmin);
+        } catch (error) {
+          console.error(error);
+      
+          handleLogout();
         }
+      }
     };
 
     checkLoggedIn();
-}, [setIsLoggedIn, setIsAdmin]);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -64,7 +55,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
       setIsAdmin(false);
       navigate('/');
     } catch (error) {
-      console.error('Error during logout:', error);
+      console.error(error);
     }
   };
 
@@ -82,7 +73,7 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
           {menu === "accueil" ? <hr /> : <></>}
         </li>
         <li onClick={() => { setMenu("badminton") }}>
-          <Link style={{ textDecoration: 'none' }} to='/badminton'>Nos produits</Link>
+          <Link style={{ textDecoration: 'none' }} to='badminton'>Nos produits</Link>
           {menu === "badminton" ? <hr /> : <></>}
         </li>
       </ul>
