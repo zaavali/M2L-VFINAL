@@ -31,28 +31,30 @@ const Navbar = ({ isLoggedIn, setIsLoggedIn, isAdmin, setIsAdmin }) => {
 
   useEffect(() => {
     const checkLoggedIn = async () => {
-      const storedToken = Cookies.get("token");
-      console.log("Stored token:", storedToken);
+        const storedToken = Cookies.get("token");
+        console.log("Stored token:", storedToken);
 
-      if (storedToken) {
-        try {
-          const decodedToken = jwtDecode(storedToken);
-          console.log("Decoded token:", decodedToken);
+        if (storedToken) {
+            try {
+                const decodedToken = jwtDecode(storedToken);
+                console.log("Decoded token:", decodedToken);
 
-          const { isAdmin } = decodedToken;
-          console.log("isAdmin from token:", isAdmin);
+                const { uuid, isAdmin } = decodedToken;
+                console.log("UUID from token:", uuid);
+                console.log("isAdmin from token:", isAdmin);
 
-          setIsLoggedIn(true);
-          setIsAdmin(isAdmin);
-        } catch (error) {
-          console.error('Error decoding token:', error);
-          handleLogout();
+                setIsLoggedIn(true);
+                setIsAdmin(isAdmin);
+                setUserUuid(uuid);
+            } catch (error) {
+                console.error('Error decoding token:', error);
+                handleLogout();
+            }
         }
-      }
     };
 
     checkLoggedIn();
-  }, [setIsLoggedIn, setIsAdmin]);
+}, [setIsLoggedIn, setIsAdmin]);
 
   const handleLogout = async () => {
     try {
