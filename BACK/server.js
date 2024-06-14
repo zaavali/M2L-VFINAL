@@ -9,28 +9,28 @@ const authRoute =  require('./routes/authroute');
 const app = express();
 app.use(cookieParser());
 app.use(express.json());
-// const corsOptions = {
-//   origin: (origin, callback) => {
+const corsOptions = {
+  origin: (origin, callback) => {
    
-//     if (!origin || /^http:\/\/localhost:\d+$/.test(origin)) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-//   credentials: true 
-// };
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', req.headers.origin);
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  if (req.method === 'OPTIONS') {
-      return res.sendStatus(200);
-  }
-  next();
-});
-
+    if (!origin || /^http:\/\/localhost:\d+$/.test(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true 
+};
+// app.use((req, res, next) => {
+//   res.header('Access-Control-Allow-Origin', req.headers.origin);
+//   res.header('Access-Control-Allow-Credentials', 'true');
+//   res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+//   if (req.method === 'OPTIONS') {
+//       return res.sendStatus(200);
+//   }
+//   next();
+// });
+app.use(cors(corsOptions));
 app.use('/uploads', express.static('uploads'));
 app.use('/api/user', userRoute);
 app.use('/api/prod', prodRoute);
